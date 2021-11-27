@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STORIELLE | <%= stanza %></title>
+    <link rel="stylesheet" href="/creazione.css">
+</head>
+<body id="body">
+    <div class="container">
+        <h1 id="titolo">Storielle</h1>
+        <h1 id="aspetta"></h1>
+        <textarea class="text" placeholder="Scrivi la tua storiella..." id="storia"></textarea>
+        <button class="btn" id="btn" onclick="pronto()">INVIA STORIELLA</button>
+        <button class="btn" id="check" onclick="check()" style="display: none;">controlla</button>
+        <button class="btn" id="next" style="display: none;">prossimo turno</button>
+        <p id="errore"></p>
+        <div id="container1"></div>
+    </div>
+
+    
+   <script src="/home.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    
+    <script>
+        const socket = io()
+        var nomi = []
+        var storie = {}
+
+        socket.emit('add', {"nome": '<%= nome %>', "stanza": '<%= stanza %>'})
+
+        const btn = document.getElementById('btn')
+        const aspetta = document.getElementById('aspetta')
+        const errore = document.getElementById('errore')
+        function pronto(){
+            var storia = document.getElementById('storia').value
+            if(storia != ''){
+                btn.style.display = 'none'
+                aspetta.innerHTML = 'aspetta che gli altri giocatori scrivano la loro storia'
+                errore.style.display = 'none'
+                document.getElementById('storia').style.display = 'none'
+                socket.emit('storia', {"storia": storia, "nome": '<%= nome %>', "stanza": '<%= stanza %>'})
+
+            }else{
+                errore.innerHTML = 'metti una storia'
+            }
+
+        }
+        socket.on('storiaa', ({storia, nome})=>{
+            storie[storia] = nome
+            nomi.push(nome)
+            
+        })
+
+        const bella = document.getElementById('container1')
+
+        socket.on('pronto', ()=>{
+            for (i in storie) {
+
+                var p = document.createElement('div')
+                p.innerHTML = `<p>${i}</p>
+                <select class="select" id="${i}">
+                    
+                </select>`
+                p.classList.add('ciao', i)
+                bella.appendChild(p)
+                for(nome in nomi){
+                    var sel = document.getElementById(i)
+                    var n = document.createElement('option')
+                    n.innerHTML = nomi[nome]
+                    sel.appendChild(n)
+                }
+            }
+            const check = document.getElementById('check')
+            check.style.display = 'block'
+            aspetta.innerHTML = ''
+        })
+
+        function check(){
+            for(storia in storie){
+                var storia_in = document.getElementById(storia).value
+               
+                if(storia_in == storie[storia]){
+                    console.log('giusto')
+                }else{
+                    console.log('sbaglaito')
+                }
+            }
+            
+            
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', sans-serif;
+}
+
+body, html{
+    height: 100%;
+}
+
+.impostazioni{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    animation: 0.5s impostazioni;
+}
+.impostazioni:hover{
+    cursor: pointer;
+}
+
+#impostazioni{
+    transition-duration: 0.5s;
+}
+
+#impostazioni:hover{
+    transition-duration: 0.5s;
+    transform: rotate(360deg);
+}
+
+.tutto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;   
+}
+.nome{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    animation: 0.5s nome;
+}
+
+.elementi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.elemento{
+    height: 260px;
+    width: 180px;
+    border-radius: 10px;
+    margin: 0 50px 0 50px;
+    box-shadow: 0px 4px 19px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition-duration: 0.3s;
+    align-items: center;
+     
+    
+}
+
+
+
+.elemento:hover{
+    height: 280px;
+    width: 200px;
+    cursor: pointer;
+    box-shadow: 0px 4px 19px 7px rgba(0, 0, 0, 0.7);
+    
+}
+
+.sotto{
+    height: 38px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    background: #1F8AD8;
+    border-radius: 0px 0px 10px 10px;
+    color: #fff;
+    text-align: center;
+}
+
+#nome, #saldo{
+    color: #1F8AD8;
+    margin: 0 0 50px 0;
+}
+
+#nome{
+    font-size: 70px;
+    
+}
+
+.bitcoin{
+    text-align: center;
+}
+
+
+@keyframes impostazioni {
+    from{right: -140px;}
+}
+
+@keyframes nome {
+    from{left: -100px;}
+}
+
+
+@media only screen and (max-width: 768px){
+
+    .elementi{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        
+        
+        transform: translateY(0);
+    }
+    .elemento{
+        width: 90%;
+        margin: 30px 0 30px 0;
+    }
+    .tutto{
+        display: block;
+    }
+    .nome{
+        position: relative;
+    }
+
+}

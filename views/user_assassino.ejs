@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298979063226603"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style_admin.css">
+    <title>ASSASSINO | <%= stanza %></title>
+</head>
+<body>
+    <div class="tutto">
+        <div class="titolo">
+            <h1 id="titolo">STANZA: <%= stanza %></h1>
+        </div>
+        <div class="descrizione">
+            <p id="descrizione">
+               Aspetta che il creatore della stanza dia i ruoli
+            </p>
+        </div>
+        <div class="centro">
+            <h1 id="ruolo"></h1>
+            <button onclick="nascondi()" id="btn_nascondi" class="btn">nascondi il tuo ruolo</button>
+        </div>
+
+    </div>
+    <!--ma diocan non hai nulla da fare eh-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const ruolo_testo = document.getElementById('ruolo')
+        const socket = io()
+        socket.emit('entra', '<%= stanza %>')
+        socket.on('conn', msg=>{
+            console.log(msg)
+        })
+        socket.on('ruolo', ruolo=>{
+            var index = 0
+            var ao = setInterval(()=>{
+                ruolo_testo.innerHTML = ruolo.slice(0, index)
+                index++
+
+                if(index > ruolo.length ){
+                    clearInterval(ao)
+                }
+
+            }, 100)
+            if(ruolo == 'assassino'){
+                
+                ruolo_testo.style.color = 'red'
+            }else if(ruolo == 'puttana'){
+                
+                ruolo_testo.style.color = 'rebeccapurple'
+                
+            }else if(ruolo == 'sbirro'){
+                
+                ruolo_testo.style.color = 'blue'
+            }else{
+                ruolo_testo.style.color = 'white' 
+            }
+        })
+        //nascondi il ruolo
+        var nascosto = false
+        var temp
+        const btn = document.getElementById('btn_nascondi')
+        function nascondi(){
+            if(nascosto){
+                ruolo_testo.classList.remove('nascosto')
+                nascosto = false
+                btn.innerHTML = 'nascondi il ruolo'
+            }else{
+                ruolo_testo.classList.add('nascosto')
+                nascosto = true
+                btn.innerHTML = 'mostra il ruolo'
+            }
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298979063226603"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSASSINO | <%= stanza %></title>
+    <link rel="stylesheet" href="/style_admin.css">
+</head>
+<body>
+    <div class="tutto">
+        <div class="titolo">
+            <h1 id="titolo">STANZA: <%= stanza %></h1>
+        </div>
+        <div class="descrizione">
+            <p id="descrizione">
+                Clicca sul bottone per assegnare i ruoli a tutti i giocatori compreso te
+            </p>
+        </div>
+        <div class="centro">
+            
+                
+            <h1 id="ruolo"></h1>
+            
+            
+            <div class="checkbox">
+                <input type="checkbox" id="complice">
+                <p>Aggiungi il complice</p>
+            </div>
+            
+            <button class="btn" onclick="dis()">distrubuisci</button>
+            <button onclick="nascondi()" id="btn_nascondi" class="btn">nascondi il tuo ruolo</button>
+        </div>
+
+        
+
+    </div>
+    
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const ruolo_testo = document.getElementById('ruolo')
+        const stanza = '<%= stanza %>'
+        const socket = io()
+        socket.emit('crea', stanza)
+        socket.on('conn', msg=>{
+            console.log(msg)
+            
+        })
+        //colora la scritta del ruolo
+        socket.on('ruolo', ruolo=>{
+            var index = 0
+            var ao = setInterval(()=>{
+                ruolo_testo.innerHTML = ruolo.slice(0, index)
+                index++
+
+                if(index > ruolo.length ){
+                    clearInterval(ao)
+                }
+
+            }, 100)
+            if(ruolo == 'assassino'){
+                
+                ruolo_testo.style.color = 'red'
+            }else if(ruolo == 'puttana'){
+                
+                ruolo_testo.style.color = 'rebeccapurple'
+                
+            //enacoid, vecio mio, cazzo cerchi?
+            }else if(ruolo == 'sbirro'){
+                
+                ruolo_testo.style.color = 'blue'
+            }else if(ruolo == 'complice'){
+                ruolo_testo.style.color = '#fcba03'
+            }else{
+                ruolo_testo.style.color = 'white' 
+            }
+
+        })
+        
+        function dis(){
+            var complice = document.getElementById('complice').checked
+            
+            socket.emit('dist', {"stanza":stanza,"complice": complice})
+            
+        }
+        //nascondi il ruolo
+        var nascosto = false
+        var temp
+        const btn = document.getElementById('btn_nascondi')
+        function nascondi(){
+            if(nascosto){
+                ruolo_testo.classList.remove('nascosto')
+                nascosto = false
+                btn.innerHTML = 'nascondi il ruolo'
+            }else{
+                ruolo_testo.classList.add('nascosto')
+                nascosto = true
+                btn.innerHTML = 'mostra il ruolo'
+            }
+        }
+        
+
+        
+
+        
+        
+    </script>
+</body>
+</html>

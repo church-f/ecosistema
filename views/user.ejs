@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= nome %></title>
+    <script src="socket.io/socket.io.js"></script>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="user.css">
+</head>
+<body>
+    <div class="tutto">
+        <div class="sopra">
+            <div class="nome">
+                <h1 id="nome"><%= nome %></h1>
+                <h2 id="saldo"><%= coin %></h2>
+            </div>
+            
+            <form action="/logout" method="post">
+                <button>loguot</button>
+            </form>
+            <div class="impostazioni" onclick="window.location.href = '/impostazioni'">
+                <h3>impostazioni</h3>
+                
+            </div>
+        </div>
+
+        <div class="elementi">
+
+            <div class="elemento bonifico" onclick="window.location.href = '/assassino'">
+                <div class="sotto">
+                    <p>Assassino</p>
+                </div>
+            </div>
+
+
+            <div class="elemento cronologia" onclick="window.location.href = '/storielle'">
+                <div class="sotto">
+                    <p>Strorielle</p>
+                </div>
+                
+                
+            </div>
+            <div class="elemento bitcoin"  onclick="window.location.href = '/god'">
+                <h1 style="color: red; position: absolute; bottom: 40%;">COMING SOON</h1>
+                <div class="sotto">
+                    <p>Aquista bitcoin</p>
+                </div>
+            </div>
+        </div>
+    
+        
+
+    </div>
+
+    
+</body>
+</html>

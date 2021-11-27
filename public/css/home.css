@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: 'Inconsolata';
+}
+
+::placeholder {
+    color: rgb(170, 170, 170);
+}
+
+html,body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titolo {
+    font-size: 50px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.inner_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.in{
+    display: flex;
+    flex-direction: row;
+}
+
+.input {
+    margin: 5px;
+    width: 160px;
+    height: 44px;
+   
+}
+
+.input, .btn{
+    border: 2px solid #000;
+    border-radius: 20px;
+    background-color: rgb(60, 60, 60);
+    color: whitesmoke;
+    cursor: pointer;
+    
+}
+
+.btn {
+    margin: 5px;
+    height: 48px;
+    width: 90px;
+    
+}
+
+.btn:hover {
+    background-color: rgb(32, 32, 32);
+}
+
+
+#nome {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+#errore {
+    font-weight: 500; 
+    word-wrap: normal;
+    margin-left: 15px;
+    color: red;
+}

@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,500;1,300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+   
+}
+
+#btn, #nome, #password{
+    width: 120%;
+    height: 30px;
+    margin: 5px 0 5px 0;
+}
+
+.in{
+    border-color: #1F8AD8;
+    border-style: solid;
+    border-radius: 20px;
+    animation: 0.5s in; 
+    
+
+}
+
+#btn{
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #1F8AD8;
+    animation: 0.5s in; 
+    
+}
+
+.tutto{
+    text-align: center;
+    font-family: 'Rubik', sans-serif;
+    
+}
+p, a{
+    font-size: 10px;
+}
+#titolo{
+    font-family: 'Rubik', sans-serif;
+    font-size:100px;
+    color: #1F8AD8;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+   
+    
+}
+
+#titolooo{
+    font-family: 'Rubik', sans-serif;
+    font-size:70px;
+    color: #1F8AD8;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#reg{
+    color: #1F8AD8;
+}
+
+
+@keyframes tit {
+    from{top: -20%;}
+}
+
+@keyframes in {
+    from{width: 0;}
+    
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostazioni</title>
+    <link rel="stylesheet" href="impostazioni.css">
+    <link rel="icon" href="img/settings.png">
+</head>
+<body>
+    <div class="tutto">
+        <button class="indietro" onclick="window.location.href = '/'">←INDIETRO</button>
+
+        <div class="impostazioni">
+            <p class="impostazione nome" id="nome">Cambia nome</p>
+            <div class="sep"></div>
+            <p class="impostazione password" id="pwd">Cambia password</p>
+            <div class="sep"></div>
+            <p class="impostazione elimina" id="delete">Elimina account</p>
+        </div>
+
+        <form action="/cambia_nome" method="post" class="cambia_nome" id="cnome">
+            <input type="text" class="nuovo_nome" placeholder="Nuovo nome" required autocomplete="off" name="user">
+            <h4 class="sotto ann" onclick="cnome.style.display = 'none'">annulla</h4>
+            <button class="sotto btn">CAMBIA</button>
+        </form>
+
+        <form action="/cambia_pwd" method="post" class="cambia_pwd" id="cpwd">
+            <input type="text" class="nuovo_nome" placeholder="Nuova password" required autocomplete="off" name="pwd">
+            <h4 class="sotto ann" onclick="cpwd.style.display = 'none'">annulla</h4>
+            <button class="sotto btn">CAMBIA</button>
+        </form>
+
+        <form action="/delete" method="post" class="delete" id="del">
+            <h2 class="del">ELIMINARE L'ACCOUNT?</h2>
+            <h4 class="sotto ann" onclick="del.style.display = 'none'">annulla</h4>
+            <button class="sotto btn dell">ELIMINA</button>
+        </form>
+
+    </div>
+
+    <script>
+        const cambia_nome = document.getElementById('nome')
+        const cnome = document.getElementById('cnome')
+        const cambia_pwd = document.getElementById('pwd')
+        const cpwd = document.getElementById('cpwd')
+        const del = document.getElementById('del')
+        const deletee = document.getElementById('delete')
+        cambia_nome.addEventListener('click', ()=>{
+            cnome.style.display = 'block'
+        })
+        cambia_pwd.addEventListener('click', ()=>{
+            cpwd.style.display = 'block'
+        })
+        deletee.addEventListener('click', ()=>{
+            del.style.display = 'block'
+        })
+        
+        
+    </script>
+</body>
+</html>
