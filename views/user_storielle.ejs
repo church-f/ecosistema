@@ -60,7 +60,7 @@
             for (i in storie) {
 
                 var p = document.createElement('div')
-                p.innerHTML = `<p>${i}</p>
+                p.innerHTML = `<p id="${i}p">${i}</p>
                 <select class="select" id="${i}">
                     
                 </select>`
@@ -79,16 +79,19 @@
         })
 
         function check(){
+            var coin = 0
             for(storia in storie){
                 var storia_in = document.getElementById(storia).value
-               
+                var storiaa = document.getElementById(storia+'p')
                 if(storia_in == storie[storia]){
-                    console.log('giusto')
+                    coin += 10
+                    storiaa.innerHTML += '✔️'
                 }else{
-                    console.log('sbaglaito')
+                    coin -= 5
+                    storiaa.innerHTML += '❌'
                 }
             }
-            
+            socket.emit('coin', {"nome": '<%= nome %>', "coin": coin})
             
         }
         

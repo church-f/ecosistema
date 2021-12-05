@@ -54,6 +54,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(path.join(__dirname, "public/css")))
 app.use(express.static(path.join(__dirname, "public/script")))
+app.use(express.static(path.join(__dirname, "public/img")))
 
 app.use(express.urlencoded());
 
@@ -146,6 +147,12 @@ io.on('connection', socket=>{
             io.to(stanza).emit('pronto')
         }
     })
+    socket.on('coin', ({nome, coin})=>{
+        
+        firebase.database().ref(nome).update({
+            coin: data[nome]['coin'] + coin
+        })
+    })
 })
 
 function middleware(req, res, next){
@@ -162,7 +169,8 @@ function middleware(req, res, next){
 
 // TUTTA LA PARTE USER
 app.get('/', (req, res)=>{
-        res.render('user', {nome: "nome", coin:  10});
+    
+    res.render('user', {nome: 'nome', coin:  10});
     
     
 })
@@ -217,11 +225,19 @@ app.post('/nuovo-check', async (req, res)=>{
 
 })
 
+app.get('/god', (req, res)=>{
+    if(data[req.session.nome]['admin']== true){
+        res.render('god', {data})
+    }else{
+        res.redirect('/')
+    }
+})
 
-app.get('/impostazioni', middleware, (req, res)=>{
+app.get('/impostazioni', (req, res)=>{
     
-        res.sendFile(__dirname+'/impostazioni.html')
+    res.sendFile(__dirname+'/impostazioni.html')
 
+    
 })
 app.post('/cambia_nome', (req, res)=>{
     var nome = req.body.user
@@ -245,12 +261,12 @@ app.post('/cambia_nome', (req, res)=>{
 app.post('/cambia_pwd', async (req, res)=>{
     var pwd = req.body.pwd
     
-        var hash_pwd = await bcrypt.hash(pwd, saltRounds)
-        res.redirect('/')
-        
-        firebase.database().ref(req.session.nome).update({
-            pwd: hash_pwd
-        })
+    var hash_pwd = await bcrypt.hash(pwd, saltRounds)
+    res.redirect('/')
+    
+    firebase.database().ref(req.session.nome).update({
+        pwd: hash_pwd
+    })
     
 })
 
@@ -272,6 +288,10 @@ app.get('/god', (req, res)=>{
 app.post('/logout', middleware,(req, res)=>{
     req.session.nome = ''
     res.redirect('/')
+})
+
+app.get('/shop', middleware, (req, res)=>{
+    res.sendFile(__dirname + '/shop.html')
 })
 
 //ASSASSINO
@@ -328,7 +348,7 @@ app.post('/storielle/entra', middleware,(req, res)=>{
         res.redirect('/storielle/'+stanza)
         stanze_storielle[stanza][req.session.nome] = ''
         stanze_storielle[stanza]['ng'] ++
-        console.log(stanze)
+        
         
     }else{
         res.redirect('/storielle')

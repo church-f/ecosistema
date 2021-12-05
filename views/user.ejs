@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298979063226603"
+     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,49 +10,72 @@
     <script src="socket.io/socket.io.js"></script>
     <link rel="icon" href="img/favicon.png">
     <link rel="stylesheet" href="user.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298979063226603"
-     crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="tutto">
         <div class="sopra">
             <div class="nome">
                 <h1 id="nome"><%= nome %></h1>
-                <h2 id="saldo"><%= coin %></h2>
+                <h2 id="saldo"><%= coin %> coin</h2>
+                <button id="shop"onclick="window.location.href = '/shop'"> NEGOZIO</button>
             </div>
             
-            <form action="/logout" method="post">
-                <button>loguot</button>
-            </form>
-            <div class="impostazioni" onclick="window.location.href = '/impostazioni'">
-                <h3>impostazioni</h3>
-                
+
+            <div class="dx">
+                <div class="impostazioni" onclick="window.location.href = '/impostazioni'">
+                    <h3>impostazioni</h3>
+                    <img src="settings.png" id="impostazioni" width="30px" alt="">
+                </div>
+                <form action="/logout" method="post" class="out">
+                    <button id="out">log-out</button>
+                </form>
             </div>
+            
         </div>
 
         <div class="elementi">
+            <div id="separatore"></div>
+            <p id="scegli">scegli a che gioco giocare:</p>
 
-            <div class="elemento bonifico" onclick="window.location.href = '/assassino'">
-                <div class="sotto">
-                    <p>Assassino</p>
+
+            <div class="elementii">
+                <div class="elemento assassino" onclick="window.location.href = '/assassino'">
+                    <p class="role" style="color: #D62020;">ASSASSINO</p>
+                    <p class="role" style="color: #DEB00E;">COMPLICE</p>
+                    <p class="role" style="color: #000;">CITTADINO</p>
+                    <p class="role" style="color: #083BF0;">SBIRRO</p>
+                    <p class="role" style="color: #B216CB;">PUTTANA</p>
+                    <div class="sotto">
+                        <p>assassino</p>
+                    </div>
+                </div>
+    
+    
+                <div class="elemento storielle" onclick="window.location.href = '/storielle'">
+                    
+                    <div class="sotto">
+                        <p>strorielle</p>
+                    </div>
+                    
+                    
                 </div>
             </div>
-
-
-            <div class="elemento cronologia" onclick="window.location.href = '/storielle'">
-                <div class="sotto">
-                    <p>Strorielle</p>
-                </div>
-                
-                
-            </div>
+            
             
         </div>
     
         
 
     </div>
-
+    <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-8298979063226603"
+     data-ad-slot="6374999835"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
     
 </body>
 </html>
