@@ -225,13 +225,6 @@ app.post('/nuovo-check', async (req, res)=>{
 
 })
 
-app.get('/god', (req, res)=>{
-    if(data[req.session.nome]['admin']== true){
-        res.render('god', {data})
-    }else{
-        res.redirect('/')
-    }
-})
 
 app.get('/impostazioni', (req, res)=>{
     
