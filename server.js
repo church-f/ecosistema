@@ -67,11 +67,7 @@ var stanze_storielle = {}
 var nomi = {}
 io.on('connection', socket=>{
     //tema
-    socket.on('tema', nome=>{
-        var tema = data[nome]['tema']
-        var colori = data[nome]['temi'][tema]
-        socket.emit('applica_tema', colori)
-    })
+    
 
     //ASSASSINO SOCKET
     //aggiungi persona nella stanza
@@ -195,7 +191,7 @@ function log(req, res, next){
 
 // TUTTA LA PARTE USER
 app.get('/', middleware, (req, res)=>{
-    res.render('user', {nome: req.session.nome, coin:  data[req.session.nome]['coin']});
+    res.render('user', {nome:'nome', coin:  10});
     
 })
 
