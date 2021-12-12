@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ecositemaa - contattaci</title>
+</head>
+<body class="secondo_c">
+    <button id="indietro" onclick="window.location.href = '/'" class="primo_c secondo">←indietro</button>
+    <div class="contenitore">
+        <h1 class="con primo">contattaci</h1>
+        <form action="/contattaci" method="post">
+            <input class="input" type="email" id="mail" name="mail" placeholder="scrivi la mail per poterti ricontattare">
+            <textarea class="input" id="msg" cols="30" rows="10" name="msg" style="resize: none;" placeholder="scrivi qua il messaggio"></textarea>
+            <button type="submit" id="btn" class="primo_c secondo">manda</button>
+        </form>
+        
+    </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Rubik', sans-serif;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #mail{
+            height: 25px;
+        }
+        #btn{
+            background-color: #1F8AD8;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 400;
+            font-size: 24px;
+            transition-duration: 0.5s;
+        }
+        #btn:hover{
+            font-size: 26px;
+        }
+        .contenitore{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        .con, #mail, #msg{
+            margin: 5px 0 5px 0;
+            color: #1F8AD8;
+        }
+        #mail, #msg{
+            border: #dedede solid;
+             
+            border-radius: 5px;
+            text-indent: 5px;
+            box-shadow: 3px 3px 6px #6db4e8;
+            
+        }
+        #mail::placeholder, #msg::placeholder{
+            
+            color: #000;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+        #indietro{
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #1F8AD8;
+            color: #fff;
+            border: none;
+            height: 30px;
+            width: 130px;
+            border-radius: 16px;
+            font-weight: 400;
+            font-size: 24px;
+            transition-duration: 0.5s;
+        }
+
+        #indietro:hover{
+            height: 40px;
+            width: 140px;
+            transition-duration: 0.5s;
+            font-size: 28px;
+        }
+
+        @media only screen and (max-width: 768px){
+            .contenitore{
+                width: 90%;
+            }
+            .con{
+                font-size: 50px;
+            }
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        const socket = io()
+
+        socket.emit('tema', '<%= nome %>')
+        socket.on('applica_tema', tema=>{
+            const primi = document.getElementsByClassName('primo')
+            const primi_c = document.getElementsByClassName('primo_c')
+            const secondi = document.getElementsByClassName('secondo')
+            const secondi_c = document.getElementsByClassName('secondo_c')
+            const input = document.getElementsByClassName('input')
+            for(i = 0; i< primi_c.length; i++){
+                primi_c[i].style.backgroundColor = tema[0]
+            }
+            for(i = 0; i< primi.length; i++){
+                primi[i].style.color = tema[0]
+            }
+            for(i = 0; i< secondi_c.length; i++){
+                secondi_c[i].style.backgroundColor = tema[1]
+            }
+            for(i = 0; i< secondi.length; i++){
+                secondi[i].style.color = tema[1]
+            }
+            for(i = 0; i< input.length; i++){
+                input[i].style.boxShadow = `3px 3px 6px ${tema[0]}`
+                
+            }
+        })
+    </script>
+
+</body>
+</html>

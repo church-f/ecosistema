@@ -14,7 +14,6 @@
         <textarea class="text" placeholder="Scrivi la tua storiella..." id="storia"></textarea>
         <button class="btn" id="btn" onclick="pronto()">INVIA STORIELLA</button>
         <button class="btn" id="check" onclick="check()" style="display: none;">controlla</button>
-        <button class="btn" id="next" style="display: none;">prossimo turno</button>
         <p id="errore"></p>
         <div id="container1"></div>
     </div>
@@ -37,6 +36,7 @@
         function pronto(){
             var storia = document.getElementById('storia').value
             if(storia != ''){
+                
                 btn.style.display = 'none'
                 aspetta.innerHTML = 'aspetta che gli altri giocatori scrivano la loro storia'
                 errore.style.display = 'none'
@@ -73,6 +73,7 @@
                     sel.appendChild(n)
                 }
             }
+            
             const check = document.getElementById('check')
             check.style.display = 'block'
             aspetta.innerHTML = ''
@@ -91,9 +92,21 @@
                     storiaa.innerHTML += '❌'
                 }
             }
-            socket.emit('coin', {"nome": '<%= nome %>', "coin": coin})
+            
+            socket.emit('coin', {"stanza": '<%= stanza %>',"nome": '<%= nome %>', "coin": coin})
             
         }
+
+        socket.on('next', ()=>{
+            btn.style.display = 'block'
+            document.getElementById('storia').style.display = 'block'
+            document.getElementById('storia').value = ''
+            storie = {}
+            nomi = []
+            const check = document.getElementById('check')
+            check.style.display = 'none'
+            bella.innerHTML = ''
+        })
         
     </script>
 </body>

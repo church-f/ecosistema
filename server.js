@@ -66,6 +66,13 @@ var admin = {}
 var stanze_storielle = {}
 var nomi = {}
 io.on('connection', socket=>{
+    //tema
+    socket.on('tema', nome=>{
+        var tema = data[nome]['tema']
+        var colori = data[nome]['temi'][tema]
+        socket.emit('applica_tema', colori)
+    })
+
     //ASSASSINO SOCKET
     //aggiungi persona nella stanza
     socket.on('entra', stanza=>{
@@ -140,15 +147,25 @@ io.on('connection', socket=>{
         
     })
     socket.on('storia', ({storia, nome, stanza})=>{
+        console.log(stanze_storielle[stanza]['p'])
+        console.log(stanze_storielle[stanza]['ng'])
         stanze_storielle[stanza][nome] = storia
         stanze_storielle[stanza]['ns'] += 1
+        console.log('dioca')
         socket.broadcast.to(stanza).emit('storiaa', {"storia": storia, "nome":nome})
         if(stanze_storielle[stanza]['ns'] == stanze_storielle[stanza]['ng']){
             io.to(stanza).emit('pronto')
         }
     })
-    socket.on('coin', ({nome, coin})=>{
-        
+    socket.on('coin', ({stanza, nome, coin})=>{
+        stanze_storielle[stanza]['p'] += 1
+        console.log(stanze_storielle[stanza]['p'])
+        console.log(stanze_storielle[stanza]['ng'])
+        if(stanze_storielle[stanza]['p'] == stanze_storielle[stanza]['ng']){
+            stanze_storielle[stanza]['p'] = 0
+            stanze_storielle[stanza]['ns'] = 0
+            io.to(stanza).emit('next')
+        }
         firebase.database().ref(nome).update({
             coin: data[nome]['coin'] + coin
         })
@@ -157,6 +174,15 @@ io.on('connection', socket=>{
 
 function middleware(req, res, next){
     if (!req.session.nome) {
+       next()
+        
+      } else {
+        next();
+      }
+}
+
+function log(req, res, next){
+    if (req.session.nome) {
         next()
         
       } else {
@@ -168,15 +194,13 @@ function middleware(req, res, next){
 
 
 // TUTTA LA PARTE USER
-app.get('/', (req, res)=>{
-    
-    res.render('user', {nome: 'nome', coin:  10});
-    
+app.get('/', middleware, (req, res)=>{
+    res.render('user', {nome: req.session.nome, coin:  data[req.session.nome]['coin']});
     
 })
 
 
-app.get('/login', (req, res)=>{
+app.get('/login',log,  (req, res)=>{
     res.sendFile(__dirname+'/login.html')
     req.session.red = true
     
@@ -201,7 +225,7 @@ app.post('/login-check', async(req, res)=>{
     }
 })
 
-app.get('/registrati', (req, res)=>{
+app.get('/registrati',log,  (req, res)=>{
     res.sendFile(__dirname+'/registrati.html')
 })
 
@@ -217,7 +241,11 @@ app.post('/nuovo-check', async (req, res)=>{
         firebase.database().ref(nome).set({
             "admin": false,
             "pwd":hash_pwd,
-            "coin":0.00
+            "coin":100,
+            "tema":"classic",
+            "temi":{
+                "classic":["#1F8AD8", "#fff"]
+            }
           })
     }else{
         res.redirect('/registrati')
@@ -225,12 +253,19 @@ app.post('/nuovo-check', async (req, res)=>{
 
 })
 
+app.get('/god', (req, res)=>{
+    if(data[req.session.nome]['admin']== true){
+        res.render('god', {data})
+    }else{
+        res.redirect('/')
+    }
+})
 
-app.get('/impostazioni', (req, res)=>{
+app.get('/impostazioni', middleware, (req, res)=>{
     
-    res.sendFile(__dirname+'/impostazioni.html')
+        res.render('impostazioni', {nome: req.session.nome})
 
-    
+
 })
 app.post('/cambia_nome', (req, res)=>{
     var nome = req.body.user
@@ -254,12 +289,12 @@ app.post('/cambia_nome', (req, res)=>{
 app.post('/cambia_pwd', async (req, res)=>{
     var pwd = req.body.pwd
     
-    var hash_pwd = await bcrypt.hash(pwd, saltRounds)
-    res.redirect('/')
-    
-    firebase.database().ref(req.session.nome).update({
-        pwd: hash_pwd
-    })
+        var hash_pwd = await bcrypt.hash(pwd, saltRounds)
+        res.redirect('/')
+        
+        firebase.database().ref(req.session.nome).update({
+            pwd: hash_pwd
+        })
     
 })
 
@@ -285,6 +320,26 @@ app.post('/logout', middleware,(req, res)=>{
 
 app.get('/shop', middleware, (req, res)=>{
     res.sendFile(__dirname + '/shop.html')
+})
+
+app.get('/contattaci', middleware, (req, res)=>{
+    res.render('contattaci', {nome: req.session.nome})
+})
+
+app.post('/contattaci', middleware, (req, res)=>{
+    const msg = req.body.msg
+    const mail = req.body.mail
+    const nome = req.session.nome
+
+    if(msg != ''){
+        res.redirect('/')
+        firebase.database().ref('msg/'+nome).set({
+            "mail": mail,
+            "msg": msg
+        })
+    }else{
+        res.redirect('/contattaci')
+    }
 })
 
 //ASSASSINO
@@ -332,6 +387,10 @@ app.get('/storielle', middleware,(req, res)=>{
     res.sendFile(__dirname+'/storielle/main.html')
 })
 
+app.get('/storielle/regole', middleware, (req, res)=>{
+    res.sendFile(__dirname+'/storielle/regole.html')
+})
+
 app.post('/storielle/entra', middleware,(req, res)=>{
     const stanza = req.body.stanza
     
@@ -354,7 +413,7 @@ app.post('/storielle/crea',middleware, (req, res)=>{
         req.session.pass = true
         req.session.stanza = stanza
         res.redirect('/storielle/'+stanza)
-        stanze_storielle[stanza]={"ng": 1, "ns":0}
+        stanze_storielle[stanza]={"ng": 1, "ns":0, "p":0}
         stanze_storielle[stanza][req.session.nome] = ''
         
     }else{
