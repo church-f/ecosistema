@@ -9,12 +9,18 @@
     <link rel="icon" href="img/favicon.png">
     <link rel="stylesheet" href="user.css">
 </head>
-<body>
-    <div class="tutto secondo_c">
+<body class="secondo_c font_applicato">
+    <div class="tutto">
         <div class="sopra">
             <div class="nome">
                 <h1 id="nome" class="primo"><%= nome %></h1>
-                <h2 id="saldo" class="primo"><%= coin %> coin</h2>
+                <div class="coin">
+                    <h2 id="saldo" class="primo"><%= coin %> coin</h2>
+                    <img src="/sp.png" alt="spegazione" id="sp">
+                    <div id="spiegazione" >
+                        guadagna coin giocando ai giochi con questo simbolo: "💸", e spendili nel <a href="/shop/temi">negozio</a>
+                    </div>
+                </div>
                 
             </div>
             
@@ -26,7 +32,7 @@
                 </div>
                 <div class="menu" id="menu">
                     <div id="largo">
-                        <p><a href="/shop" class="primo">negozio</a></p>
+                        <p><a href="/shop/temi" class="primo">negozio</a></p>
                         <p><a href="/impostazioni" class="primo">impostazioni</a></p>
                         <p><a href="/contattaci" class="primo">contattaci</a></p>
                         <form action="/logout" method="post" class="out">
@@ -59,7 +65,17 @@
                 <div class="elemento storielle" onclick="window.location.href = '/storielle'">
                     
                     <div class="sotto primo_c">
-                        <p class="secondo">strorielle</p>
+                        <p class="secondo">strorielle 💸</p>
+                        
+                    </div>
+                    
+                    
+                </div>
+
+                <div class="elemento propenso" onclick="window.location.href = '/propenso'">
+                    
+                    <div class="sotto primo_c">
+                        <p class="secondo propenso">chi è più propenso a... 💸</p>
                         
                     </div>
                     
@@ -75,32 +91,29 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        var nome = '<%= nome %>'
         const socket = io()
-
         socket.emit('tema', '<%= nome %>')
-        socket.on('applica_tema', tema=>{
-            const primi = document.getElementsByClassName('primo')
-            const primi_c = document.getElementsByClassName('primo_c')
-            const secondi = document.getElementsByClassName('secondo')
-            const secondi_c = document.getElementsByClassName('secondo_c')
-            for(i = 0; i< primi_c.length; i++){
-                primi_c[i].style.backgroundColor = tema[0]
-            }
-            for(i = 0; i< primi.length; i++){
-                primi[i].style.color = tema[0]
-            }
-            for(i = 0; i< secondi_c.length; i++){
-                secondi_c[i].style.backgroundColor = tema[1]
-            }
-            for(i = 0; i< primi.length; i++){
-                secondi[i].style.color = tema[1]
-            }
-        })
         const menu = document.getElementById('menu')
         function myFunction(x) {
             x.classList.toggle("change");
             menu.classList.toggle('largo')
         }
-    </script>
+        document.getElementById('sp').addEventListener('click', ()=>{
+            document.getElementById('spiegazione').classList.toggle('v')
+            
+        })
+        
+        var c = '<%=colori%>'.split(',')
+        var c1 = c[0]
+        var c2 = c[1]
+
+        var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+        
+        </script>
+        <script src="temi.js"></script>
+        <script src="font.js"></script>
 </body>
 </html>

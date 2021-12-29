@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298979063226603"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style_admin.css">
+    <title>ASSASSINO | <%= stanza %></title>
+</head>
+<body class="secondo_c ">
+    <div class="tutto">
+        <div class="titolo">
+            <h1 id="titolo" class="primo">STANZA: <%= stanza %></h1>
+        </div>
+        <div class="descrizione">
+            <p id="descrizione" class="primo">
+               Aspetta che il creatore della stanza dia i ruoli
+            </p>
+        </div>
+        <div class="centro">
+            <h1 id="ruolo" class="primo"></h1>
+            <button onclick="nascondi()" id="btn_nascondi" class="btn secondo primo_c">nascondi il tuo ruolo</button>
+        </div>
+
+    </div>
+    <!--ma diocan non hai nulla da fare eh-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const ruolo_testo = document.getElementById('ruolo')
+        const socket = io()
+        socket.emit('entra', '<%= stanza %>')
+        socket.on('conn', msg=>{
+            console.log(msg)
+        })
+        socket.on('ruolo', ruolo=>{
+            var index = 0
+            var ao = setInterval(()=>{
+                ruolo_testo.innerHTML = ruolo.slice(0, index)
+                index++
+
+                if(index > ruolo.length ){
+                    clearInterval(ao)
+                }
+
+            }, 100)
+            if(ruolo == 'assassino'){
+                
+                ruolo_testo.style.color = '#D62020'
+            }else if(ruolo == 'puttana'){
+                
+                ruolo_testo.style.color = '#B216CB'
+                
+            }else if(ruolo == 'sbirro'){
+                
+                ruolo_testo.style.color = '#083BF0'
+            }else if(ruolo == 'complice'){
+                ruolo_testo.style.color = '#fcba03'
+            }else{
+                ruolo_testo.style.color = 'white' 
+            }
+        })
+        //nascondi il ruolo
+        var nascosto = false
+        var temp
+        const btn = document.getElementById('btn_nascondi')
+        function nascondi(){
+            if(nascosto){
+                ruolo_testo.classList.remove('nascosto')
+                nascosto = false
+                btn.innerHTML = 'nascondi il ruolo'
+            }else{
+                ruolo_testo.classList.add('nascosto')
+                nascosto = true
+                btn.innerHTML = 'mostra il ruolo'
+            }
+        }
+        var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+    var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+</body>
+</html>

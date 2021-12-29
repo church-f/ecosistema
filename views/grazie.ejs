@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAZIE</title>
+</head>
+<body class="secondo_c">
+    <button class="secondo primo_c" onclick="window.location.href = '/'">←home</button>
+    <h1 class="primo">Grazie "<%=nome%>" per il supporto, i coin sono già stati aggiunti al tuo account</h1>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        var nome = '<%= nome %>'
+        var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+
+    var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+
+    <style>
+        button{
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            border: none;
+            border-radius: 20px;
+            height: 30px;
+            width: 100px;
+            font-size: x-large;
+            transition-duration: 0.2s;
+        }
+        button:hover{
+            cursor: pointer;
+            height: 40px;
+            width: 110px;
+            transition-duration: 0.2s;
+        }
+        body{
+            overflow-y: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</body>
+</html>

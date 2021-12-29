@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chi è più propenso a </title>
+</head>
+<body class="secondo_c">
+    <button class="primo_c secondo" onclick="window.location.href = '/'">←indietro</button>
+    
+    <div class="sopra">
+        <h1 class="titolo primo">chi è più propenso a...</h1>
+        <p id="des" class="primo">non conosci le regole? <a href="/propenso/regole" id="des" class="primo">clicca qui</a></p>
+    </div>
+    <div class="centro">
+        <form action="/propenso/entra" method="post" class="entra">
+            <input type="text" name="stanza" autocomplete="off">
+            <button type="submit"class="primo_c secondo" >entra</button>
+        </form>
+
+        <form action="/propenso/crea" method="post" class="crea">
+            <input type="text" name="stanza" autocomplete="off">
+            <button type="submit" class="primo_c secondo">crea</button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        
+        var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+
+    var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="intro.css">
+    <title></title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body>
+    <div class="primo">
+        <button class="login" onclick="window.location.href = '/login'" >log in</button>
+        <div class="mezzo">
+            <h1 class="titolo">gioca ovenque e sempre con i tuoi amici</h1>
+            <h3 class="sub">gioca a molti giochi di compagnia assieme ai tuoi amici, divertiti e guadagna coin da spendere nel negozio</h3>
+            <button class="reg" onclick="window.location.href = '/registrati'">registrati</button>
+        </div>
+        <div class="scorri">
+            <h4>scorri per alcuni esempi</h4>
+            <img src="freccia.png" id="freccia" alt="">
+        </div>
+    </div>
+    <div class="giochi">
+        <div class="ass">
+            <div class="elemento assassino" onclick="window.location.href = '/assassino'">
+                <p class="role" style="color: #D62020;">ASSASSINO</p>
+                <p class="role" style="color: #DEB00E;">COMPLICE</p>
+                <p class="role" style="color: #000;">CITTADINO</p>
+                <p class="role" style="color: #083BF0;">SBIRRO</p>
+                <p class="role" style="color: #B216CB;">PUTTANA</p>
+                <div class="sotto primo_c">
+                    <p class="secondo">assassino</p>
+                </div>
+            </div>
+            
+            <h3 id="ass">
+                In Assassino, ci sono diversi ruoli. Ognuno ha un obiettivo distinto che deve completare per vincere. Per esempio, l'assassino deve uccidere un altro giocatore e lo sbirro può arrestare altri giocatori. 
+                Una volta che un giocatore è stato ucciso, il suo ruolo è "morto" a meno che la puttana non lo rianimi.
+            </h3>
+        </div>
+        
+        <div class="st">
+            <h3 id="st">storielle è un gioco di narrazione in cui ogni giocatore deve raccontare una sua storia in forma anonima, per indovinare gli autori delle storie dei suoi amici.
+            </h3>
+            <div class="elemento storielle" onclick="window.location.href = '/storielle'">
+            
+                <div class="sotto primo_c">
+                    <p class="secondo">strorielle 💸</p>
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

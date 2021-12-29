@@ -21,13 +21,13 @@
         </div>
 
         <form action="/cambia_nome" method="post" class="cambia_nome secondo_c" id="cnome">
-            <input type="text" class="nuovo_nome secondo_c" placeholder="Nuovo nome" required autocomplete="off" name="user">
+            <input type="text" class="nuovo_nome secondo_c in" placeholder="Nuovo nome" required autocomplete="off" name="user">
             <h4 class="sotto ann primo" onclick="cnome.style.display = 'none'">annulla</h4>
             <button class="sotto btn primo_c secondo">CAMBIA</button>
         </form>
 
         <form action="/cambia_pwd" method="post" class="cambia_pwd secondo_c" id="cpwd">
-            <input type="text" class="nuovo_nome secondo_c" placeholder="Nuova password" required autocomplete="off" name="pwd">
+            <input type="text" class="nuovo_nome secondo_c in" placeholder="Nuova password" required autocomplete="off" name="pwd">
             <h4 class="sotto ann primo" onclick="cpwd.style.display = 'none'">annulla</h4>
             <button class="sotto btn primo_c secondo">CAMBIA</button>
         </form>
@@ -59,29 +59,20 @@
 
         //tema
         const socket = io()
-
-        socket.emit('tema', '<%= nome %>')
-        socket.on('applica_tema', tema=>{
-            const primi = document.getElementsByClassName('primo')
-            const primi_c = document.getElementsByClassName('primo_c')
-            const secondi = document.getElementsByClassName('secondo')
-            const secondi_c = document.getElementsByClassName('secondo_c')
-            for(i = 0; i< primi_c.length; i++){
-                primi_c[i].style.backgroundColor = tema[0]
-            }
-            for(i = 0; i< primi.length; i++){
-                primi[i].style.color = tema[0]
-            }
-            for(i = 0; i< secondi_c.length; i++){
-                secondi_c[i].style.backgroundColor = tema[1]
-            }
-            for(i = 0; i< primi.length; i++){
-                secondi[i].style.color = tema[1]
-            }
-
-            
-        })
+        var nome = '<%= nome %>'
         
+        var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+    const inn = document.getElementsByClassName('in')
+    for(i = 0; i< inn.length; i++){
+                inn[i].style.borderColor = c1
+            }
+            var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
     </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
 </body>
 </html>

@@ -6,24 +6,28 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 const PORT = process.env.PORT || 3000
-
+const fs = require('fs')
 const session = require('express-session');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+//stripee
+const stripe = require('stripe')('sk_test_51K6ctHLkjitHDmEXkJOqUHXUFhMWlTVr1f1btpSa9vCBcJHy8g9lhoRiGnjDrH5QNHDNOXxMORNVfzXWpbRPYNyz00M6lvzN97');
+
+//firebaseeeeeeeee
 var firebase = require('firebase/compat/app');
 require('firebase/compat/database');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBZReLMy423JAQq9v1SsZl5tqZQzkowd-0",
-    authDomain: "big-sito.firebaseapp.com",
-    databaseURL: "https://big-sito-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "big-sito",
-    storageBucket: "big-sito.appspot.com",
-    messagingSenderId: "111140400866",
-    appId: "1:111140400866:web:616765f40fa81b71c2f8bb",
-    measurementId: "G-WNJC59Q868"
+    apiKey: "AIzaSyBUPq34dC1D1u1SFXcumpCnDZZbzzBTlrw",
+    authDomain: "prova-30e95.firebaseapp.com",
+    databaseURL: "https://prova-30e95-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "prova-30e95",
+    storageBucket: "prova-30e95.appspot.com",
+    messagingSenderId: "297385515802",
+    appId: "1:297385515802:web:b356f6f4c5b820027a6aa3",
+    measurementId: "G-ELMJYQLRM3"
   };
 firebase.initializeApp(firebaseConfig)
 
@@ -51,23 +55,91 @@ server.listen(PORT)
 
 app.set('view engine', 'ejs')
 
-
+app.use(express.static(path.join(__dirname, "public")))
 app.use(express.static(path.join(__dirname, "public/css")))
 app.use(express.static(path.join(__dirname, "public/script")))
 app.use(express.static(path.join(__dirname, "public/img")))
 
 app.use(express.urlencoded());
 
+var temi
+fs.readFile('public/temi.json', 'utf8' , (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    temi = JSON.parse(data)
+    
+    
+  })
 
+var font
+fs.readFile('public/font.json', 'utf8', (err, data) =>{
+    if(err){
+        console.log(err)
+        return
+    }
+    font = JSON.parse(data)
+})
 
 var stanze = []
 var admin = {}
 
 var stanze_storielle = {}
 var nomi = {}
+
+var stanze_prop = {}
+var nomi_prop = {}
 io.on('connection', socket=>{
     //tema
+
+
+    socket.on('colori', nome=>{
+        var tema = data[nome]['tema']
+        var temi_cop = data[nome]['temi']
+        socket.emit('temi', {tema: tema, temi: temi_cop, all: temi, coin: data[nome]['coin']})
+    })
+
+    //cop tema
+    socket.on('cop_tema', ({nome, coin, tema})=>{
+        var p = data[nome]['temi']
+        p.push(tema)
+        firebase.database().ref(nome).update({
+            coin: data[nome]['coin'] - coin,
+            temi: p
+        })
+    })
+
+    socket.on('applica_tema', ({nome, tema})=>{
+        firebase.database().ref(nome).update({
+            tema: tema
+        })
+    })
+
+    //font
     
+
+    socket.on('all_font', nome=>{
+        var fontt = data[nome]['font']
+        var font_cop = data[nome]['font_cop']
+        socket.emit('set-shop', {font_sel :fontt, font_cop: font_cop, all: font, coin: data[nome]['coin']})
+    })
+
+    //cop font
+    socket.on('cop_font', ({nome, coin, font})=>{
+        var p = data[nome]['font_cop']
+        p.push(font)
+        firebase.database().ref(nome).update({
+            coin: data[nome]['coin'] - coin,
+            font_cop: p
+        })
+    })
+
+    socket.on('applica_font', ({nome, font})=>{
+        firebase.database().ref(nome).update({
+            font: font
+        })
+    })
 
     //ASSASSINO SOCKET
     //aggiungi persona nella stanza
@@ -143,11 +215,10 @@ io.on('connection', socket=>{
         
     })
     socket.on('storia', ({storia, nome, stanza})=>{
-        console.log(stanze_storielle[stanza]['p'])
-        console.log(stanze_storielle[stanza]['ng'])
+        
         stanze_storielle[stanza][nome] = storia
         stanze_storielle[stanza]['ns'] += 1
-        console.log('dioca')
+        socket.emit('coin', data[nome]['coin'])
         socket.broadcast.to(stanza).emit('storiaa', {"storia": storia, "nome":nome})
         if(stanze_storielle[stanza]['ns'] == stanze_storielle[stanza]['ng']){
             io.to(stanza).emit('pronto')
@@ -155,8 +226,6 @@ io.on('connection', socket=>{
     })
     socket.on('coin', ({stanza, nome, coin})=>{
         stanze_storielle[stanza]['p'] += 1
-        console.log(stanze_storielle[stanza]['p'])
-        console.log(stanze_storielle[stanza]['ng'])
         if(stanze_storielle[stanza]['p'] == stanze_storielle[stanza]['ng']){
             stanze_storielle[stanza]['p'] = 0
             stanze_storielle[stanza]['ns'] = 0
@@ -166,11 +235,31 @@ io.on('connection', socket=>{
             coin: data[nome]['coin'] + coin
         })
     })
+
+    //CHI è PIù PROPENSO A
+    socket.on('add_prop', ({nome, stanza})=>{
+        socket.join(stanza)
+        nomi_prop[socket.id] = [nome, stanza]
+        io.to(stanza).emit('giocatore', nome)
+    })
+
+    socket.on('inizia_prop', ({stanza, lista_giocatori})=>{
+        io.to(stanza).emit('start_prop', lista_giocatori)
+        stanze_prop[stanza]['start'] = true
+    })
+
+    socket.on('voto', ({stanza, nome, voto})=>{
+        stanze_prop[stanza][voto]++
+        stanze_prop[stanza]['nv']++
+        if(stanze_prop[stanza]['nv'] == stanze_prop[stanza]['ng']){
+            io.to(stanza).emit('show_voti', stanze_prop[stanza])
+        }
+    })
 })
 
 function middleware(req, res, next){
     if (!req.session.nome) {
-       next()
+        res.redirect('/login')
         
       } else {
         next();
@@ -179,7 +268,7 @@ function middleware(req, res, next){
 
 function log(req, res, next){
     if (req.session.nome) {
-        next()
+        res.redirect('/')
         
       } else {
         next();
@@ -190,8 +279,17 @@ function log(req, res, next){
 
 
 // TUTTA LA PARTE USER
-app.get('/', middleware, (req, res)=>{
-    res.render('user', {nome:'nome', coin:  10});
+app.get('/',  (req, res)=>{
+    if(req.session.nome){
+        req.session.tema = data[req.session.nome]['tema']
+        req.session.colori = temi[req.session.tema]
+        req.session.font = data[req.session.nome]['font']
+        req.session.fam = font[req.session.font]
+        res.render('user', {nome: req.session.nome, coin:  data[req.session.nome]['coin'], colori: req.session.colori, fam: req.session.fam});
+    }else{
+
+        res.sendFile(__dirname+'/intro.html')
+    }
     
 })
 
@@ -239,9 +337,13 @@ app.post('/nuovo-check', async (req, res)=>{
             "pwd":hash_pwd,
             "coin":100,
             "tema":"classic",
-            "temi":{
-                "classic":["#1F8AD8", "#fff"]
-            }
+            "temi":[
+                "classic"
+            ],
+            "font":"Rubik",
+            "font_cop":[
+                "Rubik"
+            ]
           })
     }else{
         res.redirect('/registrati')
@@ -259,7 +361,7 @@ app.get('/god', (req, res)=>{
 
 app.get('/impostazioni', middleware, (req, res)=>{
     
-        res.render('impostazioni', {nome: req.session.nome})
+    res.render('impostazioni', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
 
 
 })
@@ -301,25 +403,26 @@ app.post('/delete', (req, res)=>{
     res.redirect('/')
 })
 
-app.get('/god', (req, res)=>{
-    if(data[req.session.nome]['admin']== true){
-        res.render('god', {data})
-    }else{
-        res.redirect('/')
-    }
-})
 
 app.post('/logout', middleware,(req, res)=>{
     req.session.nome = ''
     res.redirect('/')
 })
 
-app.get('/shop', middleware, (req, res)=>{
-    res.sendFile(__dirname + '/shop.html')
+app.get('/shop/coin', middleware, (req, res)=>{
+    res.render('shop_coin', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
+})
+
+app.get('/shop/font', middleware, (req, res)=>{
+    res.render('shop_font', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
+})
+
+app.get('/shop/temi', middleware, (req, res)=>{
+    res.render('shop_temi', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
 })
 
 app.get('/contattaci', middleware, (req, res)=>{
-    res.render('contattaci', {nome: req.session.nome})
+    res.render('contattaci', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
 })
 
 app.post('/contattaci', middleware, (req, res)=>{
@@ -338,14 +441,92 @@ app.post('/contattaci', middleware, (req, res)=>{
     }
 })
 
+//pagamenti
+
+var url = 'http://localhost:3000/'
+
+//150 coin
+app.post('/shop1',middleware, async(req, res)=>{
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            
+            price: 'price_1K6dV7LkjitHDmEXkDRxwOlI',
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: `${url}grazie?coin=150`,
+        cancel_url: `${url}`,
+      });
+      req.session.cop = true
+      res.redirect(303, session.url);
+})
+
+//500 coin
+app.post('/shop2',middleware, async(req, res)=>{
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            
+            price: 'price_1K8C7HLkjitHDmEXFRv3xpLO',
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        
+        success_url: `${url}grazie?coin=500`,
+        cancel_url: `${url}`,
+      });
+      req.session.cop = true
+      res.redirect(303, session.url);
+      
+})
+
+//1000 coin
+app.post('/shop3',middleware, async(req, res)=>{
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            
+            price: 'price_1K8C8ELkjitHDmEXBtwHvU2K',
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: `${url}grazie?coin=1000`,
+        cancel_url: `${url}`,
+      });
+      req.session.cop = true
+      res.redirect(303, session.url);
+})
+
+//aggiunge coin
+app.get('/grazie', middleware, (req, res)=>{
+    if(req.session.cop === true){
+
+        firebase.database().ref(req.session.nome).update({
+            coin: data[req.session.nome]['coin'] + parseInt(req.query.coin) 
+        })
+
+        req.session.cop = false
+        res.render('grazie', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
+    }else{
+        res.redirect('/')
+    }
+})
+
 //ASSASSINO
 
 app.get('/assassino', middleware, (req, res)=>{
-    res.sendFile(__dirname+'/assassino/home.html')
+    res.render('assassino/home', {colori: req.session.colori, fam: req.session.fam})
 })
 
 app.get('/assassino/:room/admin', middleware,(req, res)=>{
-    res.render('admin', {stanza: req.params.room})
+    res.render('assassino/admin', {stanza: req.params.room, colori: req.session.colori, fam: req.session.fam})
     
 })
 app.post('/assassino/admin', middleware,(req, res)=>{
@@ -358,13 +539,16 @@ app.post('/assassino/admin', middleware,(req, res)=>{
 })
 
 app.get('/assassino/:room/user', middleware,(req, res)=>{
-    res.render('user_assassino', {stanza: req.params.room})
+    res.render('assassino/user', {stanza: req.params.room, colori: req.session.colori, fam: req.session.fam})
     
     
 })
 app.post('/assassino/user', middleware,(req, res)=>{
     if(stanze.includes(req.body.entra) != false){
         res.redirect('/assassino/'+req.body.entra+'/user')
+    }else{
+
+        res.redirect('/assassino')
     }
 
 })
@@ -373,7 +557,7 @@ app.get('/assassino/dio',middleware, (req, res)=>{
 })
 
 app.get('/assassino/regole', middleware,(req, res)=>{
-    res.sendFile(__dirname+'/assassino/regole.html')
+    res.render('assassino/regole', {colori: req.session.colori, fam: req.session.fam})
 })
 
 //STORIELLE
@@ -422,13 +606,81 @@ app.get('/storielle/:stanza', middleware,(req, res)=>{
 
     if(req.session.pass == true ){
         
-        res.render('user_storielle', {stanza: stanzaa, nome:req.session.nome})
+        res.render('user_storielle', {stanza: stanzaa, nome:req.session.nome, coin: data[req.session.nome]['coin']})
     }else{
 
-        res.send('porcoddio')
+        res.redirect('/storielle')
     }
 })
 
+//CHI è PIù PROPENSO A(little bit ignorante)
+
+app.get('/propenso', middleware, (req, res)=>{
+    res.render('propenso/home', {colori: req.session.colori, fam: req.session.fam})
+    req.session.admin_prop = false
+})
+
+app.get('/propenso/regole', middleware, (req, res)=>{
+    res.send('regole')
+})
+
+app.post('/propenso/entra', middleware,(req, res)=>{
+    const stanza = req.body.stanza
+    req.session.admin_prop = false
+    if(stanza in stanze_prop == true){
+        req.session.pass = true
+        req.session.stanza = stanza
+        res.redirect('/propenso/'+stanza)
+        stanze_prop[stanza][req.session.nome] = 0
+        stanze_prop[stanza]['ng'] ++
+        
+        
+    }else{
+        res.redirect('/propenso')
+    }
+})
+
+app.post('/propenso/crea',middleware, (req, res)=>{
+    const stanza = req.body.stanza
+    if(stanza in stanze_prop != true){
+        req.session.pass = true
+        req.session.admin_prop = true
+        req.session.stanza = stanza
+        res.redirect('/propenso/'+stanza)
+        stanze_prop[stanza]={"ng": 1, "nv":0, "start":false}
+        stanze_prop[stanza][req.session.nome] = 0
+        
+    }else{
+        res.redirect('/propenso')
+    }
+})
+
+app.get('/propenso/:stanza', middleware,(req, res)=>{
+    var stanzaa = req.session.stanza
+
+    if(stanzaa in stanze_prop){
+        if(stanze_prop[stanzaa]['start'] == false){
+
+            if(req.session.pass == true ){
+                if(req.session.admin_prop == true){
+                    res.render('propenso/admin', {stanza: stanzaa, nome:req.session.nome, coin: data[req.session.nome]['coin'], colori: req.session.colori, fam: req.session.fam})
+                }else{
+                    res.render('propenso/user', {stanza: stanzaa, nome:req.session.nome, coin: data[req.session.nome]['coin'], colori: req.session.colori, fam: req.session.fam})
+                }
+                
+            }else{
+        
+                res.redirect('/propenso')
+            }
+        }else{
+            res.redirect('/propenso')
+        }
+    }else{
+    
+        res.redirect('/propenso')
+    }
+    
+})
 
 // ERRORE 404
 app.get('*', (req, res)=>{

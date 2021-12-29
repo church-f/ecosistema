@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop - temi</title>
+    <link rel="stylesheet" href="/shop_public.css">
+    <link rel="stylesheet" href="/shop_temi.css">
+</head>
+
+    <body class="secondo_c" id="dd">
+        <button id="indietro" class="primo_c secondo" onclick="window.location.href = '/'">←indietro</button>
+        <div class="nav">
+            <p class="i"><a class="primo" id="sel" href="/shop/temi">temi</a></p>
+            <p class="i"><a class="primo" href="/shop/font">font</a></p>
+            <p class="i"><a class="primo" href="/shop/coin">coin</a></p>
+        </div>
+
+        <div class="centro" id="centro">
+            <div class="ask" id="ask">
+                <h2 class="del" id="dom">vuoi comprare questo tema?</h2>
+                <button class="sotto btn" id="btn">compra</button>
+                <h4 class="sotto ann" id="annulla"onclick="del.style.display = 'none'">annulla</h4>
+            </div>
+        </div>
+    
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            
+            const socket = io()
+            const nome = '<%= nome %>'
+            socket.emit('tema', '<%= nome %>')
+            socket.emit('colori', '<%= nome %>')
+                            
+            const del = document.getElementById('ask')
+            const ann = document.getElementById('annulla')
+            const btn = document.getElementById('btn')
+        </script>
+        <script>
+            
+                
+            
+            var c = '<%=colori%>'.split(',')
+            var c1 = c[0]
+            var c2 = c[1]
+            document.getElementById('sel').style.borderColor = c1
+            var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+        
+         
+            </script>
+            <script src="/temi.js"></script>
+        <script src="/shop_temi.js"></script>
+        <script src="/font.js"></script>
+
+</html>

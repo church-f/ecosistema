@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style_regole.css">
+</head>
+<body class="secondo_c">
+    <div class="tutto">
+        <button onclick="window.location.href = '/assassino'" id="btn" class="primo_c secondo">← indietro</button>
+        <h1 id="titolo" class="primo">
+            Regole:
+        </h1>
+        <p class="primo">
+            Le regole sono semplici, il creatore della stanza dà i ruoli a tutti i giocatori. <br>
+            Una volta assegnati i ruoli i cittadini assieme alla puttana e allo sbirro devono capire chi è l'assassino <br>
+        </p>
+            <h3 class="primo">I compiti ruoli:</h3> 
+        <p class="primo">L'assassino per uccidere deve guardare una persona e farle l'occhiolino, la vittima dovrà dichiarare di essere morta, senza rivelare
+            ne l'assassino ne il proprio ruolo, a meno che non sia la puttana che sarà obbligata a dire il suo ruolo. <br>
+            La puttana può rianimare le prsone morte, può farlo gurdandole e leccandosi un labbro, la persona rianimata dovrà dire che è di nuovo in vita. <br>
+            Lo sbirro può, una volta capito chi è l'assassino, arrestarlo semplicementemte dicendo "io sono lo sbirro e tu sei l'assassino", se lo sbirro 
+            ha arrestato la persona giusta il gioco finisce, altimenti continua. <br>
+            Il complice all'inizio del gioco è come un cittadino, ma se l'assassino gli fa l'occhiolino può inizare a uccisdere anche lui. <br>
+        </p>
+        <h3 class="primo">Le stanze</h3>
+        <p class="primo">Uno dei giocatori crea una stanza mettendo il nome nella seconda casella, e gli altri amici possono entare metendo il nome della stanza nella prima casella. <br>
+            Se state provando a creare una stanza ma non funziona probabilmente il nome della stanza è già in uso, mentre se state provando a entare in una stanza
+            ma non va, probabilmente la stanza non esiste
+        </p>
+        
+
+        
+    </div>
+    <script>
+    var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+    var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+</body>
+</html>

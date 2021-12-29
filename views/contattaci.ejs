@@ -107,32 +107,22 @@
 
     <script>
         const socket = io()
-
-        socket.emit('tema', '<%= nome %>')
-        socket.on('applica_tema', tema=>{
-            const primi = document.getElementsByClassName('primo')
-            const primi_c = document.getElementsByClassName('primo_c')
-            const secondi = document.getElementsByClassName('secondo')
-            const secondi_c = document.getElementsByClassName('secondo_c')
-            const input = document.getElementsByClassName('input')
-            for(i = 0; i< primi_c.length; i++){
-                primi_c[i].style.backgroundColor = tema[0]
-            }
-            for(i = 0; i< primi.length; i++){
-                primi[i].style.color = tema[0]
-            }
-            for(i = 0; i< secondi_c.length; i++){
-                secondi_c[i].style.backgroundColor = tema[1]
-            }
-            for(i = 0; i< secondi.length; i++){
-                secondi[i].style.color = tema[1]
-            }
-            for(i = 0; i< input.length; i++){
-                input[i].style.boxShadow = `3px 3px 6px ${tema[0]}`
+        var nome = '<%= nome %>'
+        
+        var c = '<%=colori%>'.split(',')
+        var c1 = c[0]
+        var c2 = c[1]
+        const input = document.getElementsByClassName('input')
+        for(i = 0; i< input.length; i++){
+                input[i].style.boxShadow = `3px 3px 6px ${c1}`
                 
             }
-        })
+            var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
     </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
 
 </body>
 </html>
