@@ -289,3 +289,11 @@ body, html{
     
 
 }
+
+.elemento h1{
+    font-size: 50px;
+    color: #e00227;
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(30%);
+}
