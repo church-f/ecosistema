@@ -443,7 +443,7 @@ app.post('/contattaci', middleware, (req, res)=>{
 
 //pagamenti
 
-var url = 'http://localhost:3000/'
+var url = 'https://friendtripp.herokuapp.com/'
 
 //150 coin
 app.post('/shop1',middleware, async(req, res)=>{
