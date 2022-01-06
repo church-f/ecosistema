@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>manda coin - friendtrip</title>
+    <link rel="stylesheet" href="bonifico.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body class="secondo_c">
+    
+    <div class="tutto">
+        <button class="indietro primo_c secondo" onclick="window.location.href = '/'">←INDIETRO</button>
+
+        <h1 class="titolo primo">Fai un bonifico</h1>
+
+        <form action="/bonifico_post" method="post" class="post">
+            <input type="text" class="input ao in" id="nome" name="nome" required autocomplete="off" placeholder="Destinatario">
+            <input type="number" class="input ao in" id="cifra" name="cifra" required autocomplete="off" placeholder="Inserici la cifra">
+            <button id="btn" class="ao primo_c secondo">MANDA</button>
+        </form>
+    </div>
+
+    <script>
+        var c = '<%=colori%>'.split(',')
+        var c1 = c[0]
+        var c2 = c[1]
+        const inn = document.getElementsByClassName('in')
+        for(i = 0; i< inn.length; i++){
+                inn[i].style.borderColor = c1
+            }
+        var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+        
+        </script>
+        <script src="temi.js"></script>
+        <script src="font.js"></script>
+</body>
+</html>

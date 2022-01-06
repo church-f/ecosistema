@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= nome %></title>
+    <script src="socket.io/socket.io.js"></script>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="user.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body class="secondo_c font_applicato">
+    <div class="tutto">
+        <div class="sopra">
+            <div class="nome">
+                <h1 id="nome" class="primo"><%= nome %></h1>
+                <div class="coin">
+                    <h2 id="saldo" class="primo"><%= coin %> coin</h2>
+                    <img src="/sp.png" alt="spegazione" id="sp">
+                    <div id="spiegazione" >
+                        guadagna coin giocando ai giochi con questo simbolo: "💸", e spendili nel <a href="/shop/temi">negozio</a>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="dx">
+                <div class="hb" onclick="myFunction(this)">
+                    <div class="bar1 primo_c"></div>
+                    <div class="bar2 primo_c"></div>
+                    <div class="bar3 primo_c"></div>
+                </div>
+                <div class="menu" id="menu">
+                    <div id="largo">
+                        <p><a href="/shop/temi" class="primo">negozio</a></p>
+                        <p><a href="/manda" class="primo">manda coin</a></p>
+                        <hr class="primo_c">
+                        <p><a href="/impostazioni" class="primo">impostazioni</a></p>
+                        <p><a href="/contattaci" class="primo">contattaci</a></p>
+                        <form action="/logout" method="post" class="out">
+                            <button id="out" >log-out</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="elementi">
+            <div id="separatore"></div>
+            <p id="scegli" class="primo">scegli a che gioco giocare:</p>
+
+
+            <div class="elementii">
+                <div class="elemento assassino" onclick="window.location.href = '/assassino'">
+                    <p class="role" style="color: #D62020;">ASSASSINO</p>
+                    <p class="role" style="color: #DEB00E;">COMPLICE</p>
+                    <p class="role" style="color: #000;">CITTADINO</p>
+                    <p class="role" style="color: #083BF0;">SBIRRO</p>
+                    <p class="role" style="color: #B216CB;">PUTTANA</p>
+                    <div class="sotto primo_c secondo">
+                        <p class="secondo">assassino</p>
+                    </div>
+                </div>
+    
+    
+                <div class="elemento storielle" onclick="window.location.href = '/storielle'">
+                    
+                    <div class="sotto primo_c">
+                        <p class="secondo">strorielle 💸</p>
+                        
+                    </div>
+                    
+                    
+                </div>
+
+                <div class="elemento propenso" onclick="window.location.href = '/god'">
+                    <h1>coming soon</h1>
+                    <div class="sotto primo_c">
+                        <p class="secondo propenso">chi è più propenso a... 💸</p>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+    
+        
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var nome = '<%= nome %>'
+        const socket = io()
+        socket.emit('tema', '<%= nome %>')
+        const menu = document.getElementById('menu')
+        function myFunction(x) {
+            x.classList.toggle("change");
+            menu.classList.toggle('largo')
+        }
+        document.getElementById('sp').addEventListener('click', ()=>{
+            document.getElementById('spiegazione').classList.toggle('v')
+            
+        })
+        
+        var c = '<%=colori%>'.split(',')
+        var c1 = c[0]
+        var c2 = c[1]
+
+        var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+        
+        </script>
+        <script src="temi.js"></script>
+        <script src="font.js"></script>
+</body>
+</html>

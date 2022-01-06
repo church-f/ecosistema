@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSASSINO</title>
+    <link rel="stylesheet" href="style_home.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>   
+</head>
+<body class="secondo_c">
+    <div class="tutto">
+        <button class="primo_c secondo" id="btn" onclick="window.location.href = '/'">←indietro</button>
+        <div class="titolo">
+            <h1 id="titolo" class="primo">ASSASSINO</h1>
+            <p id="des" class="primo">non conosci le regole? <a href="/assassino/regole" id="des" class="primo">clicca qui</a></p>
+        </div>
+        
+        <div class="vari_input" > 
+            
+            <form class="entra" action="/assassino/user"  method="POST">
+                <input type="text" class="input" id="entra_in" name="entra" placeholder="Metti il nome della stanza" required autocomplete="off">
+                <button id="entra_btn" class="btn primo_c secondo">entra</button>
+            </form>
+            
+            <form class="crea"  action="/assassino/admin" method="POST">
+                <input type="text" class="input" id="crea_in" name="crea" placeholder="Metti il nome della stanza" required autocomplete="off">
+                <button id="crea_btn" class="btn primo_c secondo">crea</button>
+            </form>
+            
+        
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var c = '<%=colori%>'.split(',')
+        var c1 = c[0]
+        var c2 = c[1]
+        var f = '<%=fam%>'.split(',')
+            var f1 = f[0]
+            var f2 = f[1]
+        </script>
+        <script src="/temi.js"></script>
+        <script src="/font.js"></script>
+
+    <!--cazzo fai qua coglione? torna a giocare, tranquillo che nel codice non c'è nulla di entusiasmante-->
+</body>
+</html>

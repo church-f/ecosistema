@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop - coin</title>
+    <link rel="stylesheet" href="/shop_public.css">
+    <link rel="stylesheet" href="/shop_coin.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body class="secondo_c">
+    <button id="indietro" class="primo_c secondo" onclick="window.location.href = '/'">←indietro</button>
+    <div class="nav">
+        <p class="i"><a class="primo" href="/shop/temi">temi</a></p>
+        <p class="i"><a class="primo" href="/shop/font">font</a></p>
+        <p class="i"><a class="primo" id="sel" href="/shop/coin">coin</a></p>
+    </div>
+    <div class="centro">
+        <form action="/shop1" class="elemento" method="POST">
+            150 coin
+            <button type="submit" id="btn" class="primo secondo_c">0,99€ </button>
+          </form> 
+
+        <form action="/shop2" class="elemento" method="POST">
+            500 coin
+            <button type="submit" id="btn" class="primo secondo_c">2,99€</button>
+        </form> 
+
+        <form action="/shop3" class="elemento" method="POST">
+            1000 coin
+            <button type="submit" id="btn" class="primo secondo_c">5€</button>
+        </form> 
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        var nome = '<%= nome %>'
+        socket.emit('tema', '<%= nome %>')
+        var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+    document.getElementById('sel').style.borderColor = c1
+    var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+    <script>
+        const doc = document.getElementsByClassName('elemento')
+        socket.on('applica_tema', tema=>{
+            for(i = 0; i<doc.length; i++){
+                doc[i].style.boxShadow = `3px 3px 6px ${tema[0]}`
+            }
+            document.getElementById('sel').style.borderColor = tema[0]
+        })
+    </script>
+</body>
+</html>

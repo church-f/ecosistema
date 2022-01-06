@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>diooooo</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body>
+    <h1>god page</h1>
+    <input type="text" id="nome" placeholder="nome" autocomplete="off">
+    <div class="add">
+        <input type="text" id="piu" placeholder="coin da aggiungere" autocomplete="off">
+        <button onclick="add()">aggiungi</button>
+    </div>
+    
+    <div class="del">
+        <input type="text" id="meno" placeholder="coin da toglere" autocomplete="off">
+        <button onclick="del()">togli</button>
+    </div>
+    
+    <div class="fondo">
+        <button onclick="res()">reset</button>
+        <button onclick="admin()">rendi admin</button>
+        <p id="msg"></p>
+    </div>
+    
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+   
+    <script >
+        var data
+        const msg = document.getElementById('msg')
+        const firebaseConfig = {
+        apiKey: "AIzaSyBUPq34dC1D1u1SFXcumpCnDZZbzzBTlrw",
+        authDomain: "prova-30e95.firebaseapp.com",
+        databaseURL: "https://prova-30e95-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "prova-30e95",
+        storageBucket: "prova-30e95.appspot.com",
+        messagingSenderId: "297385515802",
+        appId: "1:297385515802:web:b356f6f4c5b820027a6aa3",
+        measurementId: "G-ELMJYQLRM3"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.database().ref().on('value', (snapshot) => {
+            data = snapshot.val();
+        });
+        
+
+        //AGGIUNGI COIN A SCELTA
+        function add(){
+           var nome = document.getElementById('nome').value
+           
+           try{
+               var cifra = document.getElementById('piu').value
+                firebase.database().ref(nome).update({
+                    coin: data[nome]['coin']+= parseInt(cifra)
+                    
+                })
+                msg.innerHTML = "t'appost"
+            }catch{
+                msg.innerHTML = 'riprova'
+            }
+        }
+        // TOGLI COIN A SCELTA
+        function del(){
+           var nome = document.getElementById('nome').value
+           
+           try{
+               var cifra = document.getElementById('meno').value
+                firebase.database().ref(nome).update({
+                    coin: data[nome]['coin']-= parseInt(cifra)
+                    
+                })
+                msg.innerHTML = "t'appost"
+            }catch{
+                msg.innerHTML = 'riprova'
+            }
+        }
+
+        //ELIMANA I COIN
+        function res(){
+           var nome = document.getElementById('nome').value
+           
+           try{
+               var cifra = document.getElementById('piu').value
+                firebase.database().ref(nome).update({
+                    coin: data[nome]['coin']=0
+                    
+                })
+                msg.innerHTML = "t'appost"
+            }catch{
+                msg.innerHTML = 'riprova'
+            }
+        }
+
+        //RENDI ADMIN
+        function admin(){
+           var nome = document.getElementById('nome').value
+           
+           try{
+               firebase.database().ref(nome).update({
+                    admin: true
+                    
+                })
+                msg.innerHTML = "t'appost"
+            }catch{
+                msg.innerHTML = 'riprova'
+            }
+        }
+    </script>
+</body>
+</html>

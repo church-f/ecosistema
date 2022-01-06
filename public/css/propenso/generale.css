@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.voti{
+    display: flex;
+    flex-direction: column;
+}
+
+.voto{
+    display: flex;
+    flex-direction: row;
+}

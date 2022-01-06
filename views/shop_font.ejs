@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop - font</title>
+    <link rel="stylesheet" href="/shop_public.css">
+    <link rel="stylesheet" href="/shop_font.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Merriweather:wght@300&family=Oswald:wght@300&family=Roboto:wght@300&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body>
+    <body class="secondo_c">
+        <button id="indietro" class="primo_c secondo" onclick="window.location.href = '/'">←indietro</button>
+        <div class="nav">
+            <p class="i"><a class="primo" href="/shop/temi">temi</a></p>
+            <p class="i"><a class="primo" id="sel" href="/shop/font">font</a></p>
+            <p class="i"><a class="primo" href="/shop/coin">coin</a></p>
+        </div>
+        <div class="centro" id="centro">
+            <div class="ask" id="ask">
+                <h2 class="del" id="dom">vuoi comprare questo font?</h2>
+                <button class="sotto btn" id="btn">compra</button>
+                <h4 class="sotto ann" id="annulla"onclick="del.style.display = 'none'">annulla</h4>
+            </div>
+        </div>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io()
+            var nome = '<%= nome %>'
+            socket.emit('tema', '<%= nome %>')
+            const del = document.getElementById('ask')
+            const ann = document.getElementById('annulla')
+            const btn = document.getElementById('btn')
+        </script>
+        
+        <script>
+            
+            var c = '<%=colori%>'.split(',')
+            var c1 = c[0]
+            var c2 = c[1]
+            document.getElementById('sel').style.borderColor = c1
+            var f = '<%=fam%>'.split(',')
+            var f1 = f[0]
+            var f2 = f[1]
+            </script>
+            <script src="/font.js"></script>
+        <script src="/temi.js"></script>
+        <script src="/shop_font.js"></script>
+        
+</body>
+</html>

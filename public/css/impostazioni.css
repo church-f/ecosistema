@@ -1,0 +1,156 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+   
+}
+
+body, html{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.indietro{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: 0;
+    border-radius: 20px;
+    background-color: #1F8AD8;
+    color: #fff ;
+    height: 30px;
+    width: 80px;
+}
+
+.impostazioni{
+    text-align: center;
+}
+
+.sep{
+    height: 2px;
+    width: 100%;
+    background-color: #C4C4C4;
+    margin: 5px 0 5px 0;
+}
+
+.elimina{
+    color: #FF0101;
+}
+
+.impostazione{
+    font-size: x-large;
+    transition-duration: 0.3s;
+}
+
+.impostazione:hover{
+    transition-duration: 0.3s;
+    font-size: 33px;
+}
+
+.impostazione:hover, .indietro:hover{
+    cursor: pointer;
+    
+}
+
+.cambia_nome{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: 350px;
+    height: 250px;
+    box-shadow: 0px 4px 19px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    display: none;
+}
+
+.nuovo_nome{
+    border-color: #1F8AD8;
+    border-style: solid;
+    border-radius: 20px;
+    height: 40px;
+    width: 90%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    
+}
+
+.sotto{
+    position: absolute;
+    bottom: 10%;
+    margin: 0 10px 0 10px;
+    cursor: pointer;
+}
+.btn{
+    right: 0;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #1F8AD8;
+    height: 30px;
+    width: 70px;
+}
+.ann{
+    color: rgba(0, 0, 0, 0.5);
+}
+
+
+.cambia_pwd{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: 350px;
+    height: 250px;
+    box-shadow: 0px 4px 19px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    display: none;
+}
+
+.nuovo_pwd{
+    border-color: #1F8AD8;
+    border-style: solid;
+    border-radius: 20px;
+    height: 40px;
+    width: 90%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    
+}
+
+.delete{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    text-align: center;
+    width: 250px;
+    height: 150px;
+    box-shadow: 0px 4px 19px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    display: none;
+}
+
+.dell{
+    background-color: #d61c0f;
+}
+
+.del{
+    color: #d61c0f;
+}

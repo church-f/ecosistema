@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STORIELLE | <%= stanza %></title>
+    <link rel="stylesheet" href="/creazione.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body id="body">
+    <div class="container">
+        <h1 id="titolo" class="font">Storielle</h1>
+        <h2 id="coin" class="font">puoi scommetere : <%= coin %> coin</h2>
+        <h1 id="aspetta" class="font"></h1>
+        <textarea class="text font" placeholder="Scrivi la tua storiella..." id="storia"></textarea>
+        <button class="btn font" id="btn" onclick="pronto()">INVIA STORIELLA</button>
+        <button class="btn font" id="check" onclick="check()" style="display: none;">controlla</button>
+        <p id="errore" class="font"></p>
+        <div id="container1" class="font"></div>
+    </div>
+
+    
+   <script src="/home.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    
+    <script>
+        const socket = io()
+        var nomi = []
+        var storie = {}
+
+        var coin_show = '<%= coin %>'
+        socket.emit('add', {"nome": '<%= nome %>', "stanza": '<%= stanza %>'})
+
+        const btn = document.getElementById('btn')
+        const aspetta = document.getElementById('aspetta')
+        const errore = document.getElementById('errore')
+        function pronto(){
+            var storia = document.getElementById('storia').value
+            if(storia != ''){
+                
+                btn.style.display = 'none'
+                aspetta.innerHTML = 'aspetta che gli altri giocatori scrivano la loro storia'
+                errore.style.display = 'none'
+                document.getElementById('storia').style.display = 'none'
+                socket.emit('storia', {"storia": storia, "nome": '<%= nome %>', "stanza": '<%= stanza %>'})
+
+            }else{
+                errore.innerHTML = 'metti una storia'
+            }
+
+        }
+
+        const coin_h2 = document.getElementById('coin')
+        const bella = document.getElementById('container1')
+        socket.on('coinn', coin=>{
+            coin_show = coin
+            coin_h2.innerHTML = `puoi scommetere : ${coin}  coin`
+        })
+        socket.on('storiaa', ({storia, nome})=>{
+            storie[storia] = nome
+            nomi.push(nome)
+            
+        })
+
+
+        
+
+        socket.on('pronto', ()=>{
+            for (i in storie) {
+
+                var p = document.createElement('div')
+                p.innerHTML = `<p id="${i}p">${i}</p>
+                <select class="select" id="${i}">
+                    
+                </select>
+                <input type="number" class="bet" id="bet${i}" placeholder="scommessa">`
+                
+                p.classList.add('ciao')
+                bella.appendChild(p)
+                for(nome in nomi){
+                    var sel = document.getElementById(i)
+                    var n = document.createElement('option')
+                    n.innerHTML = nomi[nome]
+                    sel.appendChild(n)
+                }
+            }
+            
+            const check = document.getElementById('check')
+            check.style.display = 'block'
+            aspetta.innerHTML = ''
+        })
+    
+
+        function check(){
+            var bet = document.getElementsByClassName('bet')
+            var somma = 0
+            for(i =0; i<bet.length; i++){
+                
+                if( isNaN(parseInt(bet[i].value)) || parseInt(bet[i].value)<= 0){
+                    somma += 10
+                }else{
+                    somma += parseInt(bet[i].value)
+                }
+                console.log(somma)
+            }
+            if(somma <= coin_show){
+                
+                var coin = 0
+                for(storia in storie){
+                    var storia_in = document.getElementById(storia).value
+                    var storiaa = document.getElementById(storia+'p')
+                    var bet = parseInt(document.getElementById('bet'+storia).value)
+                    if(storia_in == storie[storia]){
+                        if(isNaN(bet) || bet <= 0){
+                            coin += 10
+                        }else{
+                            coin += bet
+                        }
+                        
+                        storiaa.innerHTML += '✔️'
+                    }else{
+                        if(isNaN(bet) || bet <= 0){
+                            coin -= 5
+                        }else{
+                            coin -= bet
+                        }
+                        storiaa.innerHTML += '❌'
+                    }
+                }
+                errore.style.display = 'none'
+                socket.emit('coin', {"stanza": '<%= stanza %>',"nome": '<%= nome %>', "coin": coin})
+            }else{
+                errore.style.display = 'block'
+                errore.innerHTML = 'le scomesse sono troppo alte rispetto ai tuoi coin'
+            }
+        }
+
+        socket.on('next', ()=>{
+            btn.style.display = 'block'
+            document.getElementById('storia').style.display = 'block'
+            document.getElementById('storia').value = ''
+            storie = {}
+            nomi = []
+            const check = document.getElementById('check')
+            check.style.display = 'none'
+            bella.innerHTML = ''
+        })
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+
+html{
+    height: 100%;
+}
+body{
+    text-align: center;
+    height: 100%;
+    
+    background-color: rgb(51, 51, 51);
+}
+
+
+.btn{
+    margin-bottom: 20px;
+    border-radius: 5px;
+    
+    height: 40px;
+    border: 0;
+}
+
+
+
+.centro{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 99%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+#titolo{
+    margin-top: 20px;
+    
+}
+
+h1, p{
+      
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.descrizione{
+    width: 100%;
+}
+
+.checkbox{
+    display: flex;
+    margin-left: 5px;
+}
+
+#complice{
+    margin-right: 2px;
+}
+
+#ruolo{
+    transition-duration: 0.5s;
+    
+}
+
+.nascosto{
+    transition-duration: 0.5s;
+    opacity: 0;
+}
+

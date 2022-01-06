@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/propenso/generale.css">
+    <title>chi è più propenso a </title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body class="secondo_c">
+    <button class="primo_c secondo" onclick="window.location.href = '/propenso'">←indietro</button>
+    <div class="centro">
+        <h1 class="primo">chi è più propenso a </h1>
+
+        <div id="as" >
+            <h1 class="aspetta primo">aspetta che ci siamìno tutti i giocatori e poi clicca il bottone per iniziare la partita</h1>
+            <h1 class="giocatori primo">giocatori nella stanza: </h1><h1 class="primo" id="giocatori"></h1>
+            <button class="primo_c secondo" onclick="inizia()">inizia</button>
+        </div>
+        <h1 id="wait" class="primo">aspetta che le altre persone votino</h1>
+        
+        <div class="principale" id="principale">
+            <select name="" id="sel"></select>
+            <button onclick="invia()">invia</button>
+        </div>
+
+        <div class="voti" id="voti">
+            
+
+            
+        </div>
+
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        var nome = '<%= nome %>'
+        var stanza = '<%= stanza %>'
+        socket.emit('add_prop', {"nome": nome, "stanza": stanza})
+
+        var aspetta = document.getElementById('as')
+        var principale = document.getElementById('principale')
+        var sel = document.getElementById('sel')
+        var wait = document.getElementById('wait')
+        var votii = document.getElementById('voti')
+
+        principale.style.display = 'none'
+        wait.style.display = 'none'
+
+        var lista_giocatori = []
+        var giocatori = document.getElementById('giocatori')
+        socket.on('giocatore', giocatore=>{
+            giocatori.innerHTML += '- '+ giocatore
+            lista_giocatori.push(giocatore)
+        })
+        function inizia(){
+            socket.emit('inizia_prop', {stanza: stanza, lista_giocatori: lista_giocatori})
+        }
+
+        //crea il drop down
+        socket.on('start_prop', lista_giocatori=>{
+            aspetta.style.display = 'none'
+            principale.style.display = 'block'
+            
+            for(i = 0; i < lista_giocatori.length; i++){
+                var n = document.createElement('option')
+                n.innerHTML = lista_giocatori[i]
+                sel.appendChild(n)
+            }
+        })
+
+        var voto 
+        //invia il voto
+        function invia(){
+            voto = sel.value
+            socket.emit('voto', {stanza: stanza, nome: nome, voto:voto})
+            principale.style.display = 'none'
+            wait.style.display = 'block'
+        }
+
+        //crea tabella
+        socket.on('show_voti', voti=>{
+            wait.style.display = 'none'
+            for(i = 0; i < lista_giocatori.length; i++){
+                var n_div = document.createElement('div')
+                n_div.innerHTML = `<div class="voto">
+                                        <h1 class="nome">${lista_giocatori[i]}</h1>
+                                        <h1 class="voto_n">${voti[lista_giocatori[i]]}</h1>
+                                    </div>`
+                votii.appendChild(n_div)
+            }
+        })
+        var c = '<%=colori%>'.split(',')
+        var c1 = c[0]
+        var c2 = c[1]
+
+        var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+</body>
+</html>

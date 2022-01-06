@@ -1,0 +1,22 @@
+{
+  "name": "sito",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "Cristian Romano & Flavio Briancesco",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "firebase": "^9.4.1",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.3.2",
+    "stripe": "^8.193.0"
+  }
+}

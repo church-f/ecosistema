@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostazioni</title>
+    <link rel="stylesheet" href="impostazioni.css">
+    <link rel="icon" href="img/settings.png">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body class="secondo_c">
+    <div class="tutto">
+        <button class="indietro primo_c secondo" onclick="window.location.href = '/'">←INDIETRO</button>
+
+        <div class="impostazioni">
+            <p class="impostazione nome primo" id="nome">Cambia nome</p>
+            <div class="sep"></div>
+            <p class="impostazione password primo" id="pwd">Cambia password</p>
+            <div class="sep"></div>
+            <p class="impostazione elimina" id="delete">Elimina account</p>
+        </div>
+
+        <form action="/cambia_nome" method="post" class="cambia_nome secondo_c" id="cnome">
+            <input type="text" class="nuovo_nome secondo_c in" placeholder="Nuovo nome" required autocomplete="off" name="user">
+            <h4 class="sotto ann primo" onclick="cnome.style.display = 'none'">annulla</h4>
+            <button class="sotto btn primo_c secondo">CAMBIA</button>
+        </form>
+
+        <form action="/cambia_pwd" method="post" class="cambia_pwd secondo_c" id="cpwd">
+            <input type="text" class="nuovo_nome secondo_c in" placeholder="Nuova password" required autocomplete="off" name="pwd">
+            <h4 class="sotto ann primo" onclick="cpwd.style.display = 'none'">annulla</h4>
+            <button class="sotto btn primo_c secondo">CAMBIA</button>
+        </form>
+
+        <form action="/delete" method="post" class="delete" id="del">
+            <h2 class="del">ELIMINARE L'ACCOUNT?</h2>
+            <h4 class="sotto ann" onclick="del.style.display = 'none'">annulla</h4>
+            <button class="sotto btn dell ">ELIMINA</button>
+        </form>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const cambia_nome = document.getElementById('nome')
+        const cnome = document.getElementById('cnome')
+        const cambia_pwd = document.getElementById('pwd')
+        const cpwd = document.getElementById('cpwd')
+        const del = document.getElementById('del')
+        const deletee = document.getElementById('delete')
+        cambia_nome.addEventListener('click', ()=>{
+            cnome.style.display = 'block'
+        })
+        cambia_pwd.addEventListener('click', ()=>{
+            cpwd.style.display = 'block'
+        })
+        deletee.addEventListener('click', ()=>{
+            del.style.display = 'block'
+        })
+
+        //tema
+        const socket = io()
+        var nome = '<%= nome %>'
+        
+        var c = '<%=colori%>'.split(',')
+    var c1 = c[0]
+    var c2 = c[1]
+    const inn = document.getElementsByClassName('in')
+    for(i = 0; i< inn.length; i++){
+                inn[i].style.borderColor = c1
+            }
+            var f = '<%=fam%>'.split(',')
+        var f1 = f[0]
+        var f2 = f[1]
+    </script>
+    <script src="/temi.js"></script>
+    <script src="/font.js"></script>
+</body>
+</html>

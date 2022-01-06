@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="img/favicon.png">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCGR4CMDYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZCGR4CMDYE');
+    </script>
+</head>
+<body>
+    <div class="tutto">
+        
+            <h1 id="titolo">
+                LOG-INNN
+            </h1>
+        
+
+        
+
+        <form class="input" action="/login-check" method="POST">
+            <input type="text" id="nome" class="in" name="user" placeholder="Nome utente" required autocomplete="off">
+            <input type="password" id="password" class="in" name="password" placeholder="Password" required>
+            <button type="submit" id="btn">ACCEDI</button>
+
+        </form>
+        <p>Non hai un account? <a href="/registrati" id="reg">Registrati</a></p>
+    </div>
+</body>
+</html>

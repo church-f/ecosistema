@@ -1,0 +1,301 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+
+}
+
+body, html{
+    height: 100%;
+    overflow-x: hidden;
+}
+
+
+#sp{
+    height: 28px;
+    margin-left: 10px;
+}
+#sp:hover{
+    cursor: pointer;
+}
+.coin{
+    display: flex;
+    flex-direction: row;
+}
+#spiegazione{
+    display: none;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.v#spiegazione{
+    display: block;
+}
+
+.dx{
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    animation: 0.5s impostazioni;
+    z-index: 1;
+}
+
+.tutto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;   
+}
+.nome{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    animation: 0.5s nome;
+}
+
+.role{
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.storielle{
+    background-image: url("bg.png");
+}
+
+.elementi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+.elementii{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.elemento{
+    height: 260px;
+    width: 180px;
+    border-radius: 10px;
+    margin: 0 50px 0 50px;
+    box-shadow: 0px 4px 19px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition-duration: 0.3s;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    
+}
+
+#scegli{
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    
+}
+
+.elemento:hover{
+    height: 280px;
+    width: 200px;
+    cursor: pointer;
+    box-shadow: 0px 4px 19px 7px rgba(0, 0, 0, 0.7);
+    
+    
+}
+
+.sotto{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    border-radius: 0px 0px 10px 10px;
+    text-align: center;
+    font-size: 26px;
+}
+
+#nome, #saldo{
+    color: #1F8AD8;
+    margin: 0 0 10px 0;
+}
+
+#nome{
+    font-size: 70px;
+    
+}
+
+#shop{
+    border: none;
+    height: 40px;
+    width: 140px;
+    border-radius: 16px;
+    font-weight: 400;
+    font-size: 28px;
+    margin-top: 15px;
+    transition-duration: 0.5s;
+}
+
+#shop:hover{
+    height: 50px;
+    width: 150px;
+    transition-duration: 0.5s;
+    font-size: 30px;
+}
+
+
+
+
+@keyframes impostazioni {
+    from{right: -140px;}
+}
+
+@keyframes nome {
+    from{left: -100px;}
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    margin: 6px 0;
+    transition: 0.4s;
+    border-radius: 2px;
+}
+  
+  
+  .change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+    transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+  
+  
+  .change .bar2 {
+    opacity: 0;
+}
+  
+  
+  .change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+    transform: rotate(45deg) translate(-8px, -8px) ;
+}
+.hb{
+    margin: 20px 20px 0 0 ;
+    
+}
+
+.hb:hover{
+    cursor: pointer;
+    font-size: 35px;
+}
+#largo{
+    height: 100vh;
+    width: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    transition-duration: 0.5s;
+    overflow-x: hidden;
+    text-align: right;
+}
+
+.largo #largo{
+    width: 20vw;
+   
+}
+
+#largo a{
+    text-decoration: none;
+    font-size: 30px;
+    transition-duration: 0.3s;
+    -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: #fff;
+}
+
+#largo a:hover{
+    font-size: 35px;
+}
+#largo p{
+    margin: 20px 10px 0 0;
+}
+
+#out{
+    margin: 20px 10px 0 0;
+    font-size: 30px;
+    color: #e00227;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    transition-duration: 0.3s;
+}
+
+#out:hover{
+    font-size: 35px;
+}
+
+.propenso{
+    font-size: 20px;
+}
+
+
+@media only screen and (max-width: 768px){
+
+    .elementii{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        
+        
+        transform: translateY(0);
+    }
+    .elemento{
+        width: 90%;
+        margin: 30px 0 30px 0;
+    }
+    .tutto{
+        display: block;
+    }
+    .nome{
+        position: relative;
+    }
+
+    #separatore{
+        height: 1px;
+        width: 90%;
+        background-color: #000;
+    }
+
+    .sotto{
+        
+        font-size: 30px;
+    }
+
+    #shop{
+      height: 30px;
+      width: 130px;  
+      font-size: 25px;
+    }
+
+    .dx{
+        font-size: 20px;
+    }
+    .storielle{
+        font-size: 150%;
+    }
+    .largo #largo{
+        width: 50vw;
+    }
+    
+
+}
+
+.elemento h1{
+    font-size: 50px;
+    color: #e00227;
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(30%);
+}

@@ -1,0 +1,30 @@
+.font{
+    text-align: center;
+    margin: 20px;
+    transition-duration: 0.2s;
+}
+
+.text{
+    font-weight: 900;
+    
+}
+
+.centro{
+    position: absolute;
+    top: 30%;
+    
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+.sel.font{
+    box-shadow: 4px 4px 4px #34CB43;
+}
+
+.font:hover{
+    cursor: pointer;
+    font-size: 17px;
+    transition-duration: 0.2s;
+}
