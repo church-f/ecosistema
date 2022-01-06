@@ -18,13 +18,32 @@
 <body>
     <h1>god page</h1>
     <input type="text" id="nome" placeholder="nome" autocomplete="off">
-    <input type="text" id="piu" placeholder="coin da aggiungere" autocomplete="off">
-    <button onclick="add()">aggiungi</button>
-    <input type="text" id="meno" placeholder="coin da toglere" autocomplete="off">
-    <button onclick="del()">togli</button>
-    <button onclick="res()">reset</button>
-    <button onclick="admin()">rendi admin</button>
-    <p id="msg"></p>
+    <div class="add">
+        <input type="text" id="piu" placeholder="coin da aggiungere" autocomplete="off">
+        <button onclick="add()">aggiungi</button>
+    </div>
+    
+    <div class="del">
+        <input type="text" id="meno" placeholder="coin da toglere" autocomplete="off">
+        <button onclick="del()">togli</button>
+    </div>
+    
+    <div class="fondo">
+        <button onclick="res()">reset</button>
+        <button onclick="admin()">rendi admin</button>
+        <p id="msg"></p>
+    </div>
+    
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            
+        }
+    </style>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>

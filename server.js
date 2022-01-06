@@ -185,13 +185,17 @@ io.on('connection', socket=>{
         if(socket.id in nomi == true){
             var nome = nomi[socket.id]
             if(nome != undefined){
-                
-                stanze_storielle[nome[1]]['ns'] -= 1
-                
-                delete stanze_storielle[nome[1]][nome[0]] 
-                stanze_storielle[nome[1]]['ng'] -= 1
-                if(stanze_storielle[nome[1]]['ng'] == 0){
-                    delete stanze_storielle[nome[1]]
+                try{
+
+                    stanze_storielle[nome[1]]['ns'] -= 1
+                    
+                    delete stanze_storielle[nome[1]][nome[0]] 
+                    stanze_storielle[nome[1]]['ng'] -= 1
+                    if(stanze_storielle[nome[1]]['ng'] == 0){
+                        delete stanze_storielle[nome[1]]
+                    }
+                }catch{
+
                 }
 
             }}
@@ -215,13 +219,18 @@ io.on('connection', socket=>{
         
     })
     socket.on('storia', ({storia, nome, stanza})=>{
-        
-        stanze_storielle[stanza][nome] = storia
-        stanze_storielle[stanza]['ns'] += 1
-        socket.emit('coin', data[nome]['coin'])
-        socket.broadcast.to(stanza).emit('storiaa', {"storia": storia, "nome":nome})
-        if(stanze_storielle[stanza]['ns'] == stanze_storielle[stanza]['ng']){
-            io.to(stanza).emit('pronto')
+        try{
+
+            stanze_storielle[stanza][nome] = storia
+            stanze_storielle[stanza]['ns'] += 1
+            socket.emit('coinn', data[nome]['coin'])
+            socket.broadcast.to(stanza).emit('storiaa', {"storia": storia, "nome":nome})
+            if(stanze_storielle[stanza]['ns'] == stanze_storielle[stanza]['ng']){
+                io.to(stanza).emit('pronto')
+                socket.emit('coinn', data[nome]['coin'])
+            }
+        }catch{
+
         }
     })
     socket.on('coin', ({stanza, nome, coin})=>{
@@ -230,6 +239,7 @@ io.on('connection', socket=>{
             stanze_storielle[stanza]['p'] = 0
             stanze_storielle[stanza]['ns'] = 0
             io.to(stanza).emit('next')
+            socket.emit('coinn', data[nome]['coin'])
         }
         firebase.database().ref(nome).update({
             coin: data[nome]['coin'] + coin
@@ -438,6 +448,31 @@ app.post('/contattaci', middleware, (req, res)=>{
         })
     }else{
         res.redirect('/contattaci')
+    }
+})
+
+//bonifici
+app.get('/manda', middleware, (req, res)=>{
+    res.render('bonifico', {nome: req.session.nome, colori: req.session.colori, fam: req.session.fam})
+})
+
+//fai il bonifico
+app.post('/bonifico_post', (req, res)=>{
+    var nome = req.body.nome
+    var cifra = req.body.cifra
+    
+    if(data[nome] != undefined && cifra <= data[req.session.nome]['coin']){
+       
+        firebase.database().ref(req.session.nome).update({
+            coin: data[req.session.nome]['coin']-= parseInt(cifra)
+        })
+        firebase.database().ref(nome).update({
+            coin: data[nome]['coin']+= parseInt(cifra)
+        })
+        res.redirect('/')
+    }else{
+        
+        res.redirect('/bonifico')
     }
 })
 

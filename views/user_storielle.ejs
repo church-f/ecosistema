@@ -60,7 +60,9 @@
 
         }
 
-        socket.on('coin', coin=>{
+        const coin_h2 = document.getElementById('coin')
+        const bella = document.getElementById('container1')
+        socket.on('coinn', coin=>{
             coin_show = coin
             coin_h2.innerHTML = `puoi scommetere : ${coin}  coin`
         })
@@ -70,8 +72,6 @@
             
         })
 
-        const coin_h2 = document.getElementById('coin')
-        const bella = document.getElementById('container1')
 
         
 
