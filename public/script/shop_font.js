@@ -10,7 +10,7 @@ socket.on('set-shop', ({font_sel, font_cop, all, coin})=>{
             ne.innerHTML = `<div class="font" style="font-family: ${all[i][1]}; color: ${c1}" onclick="sel('${i}')">
                                 <h1 id="nome" class="text"  style="font-family: ${all[i][1]};">${nome}</</h1>
                                 <h1 id="font" class="text"  style="font-family: ${all[i][1]};">${all[i][0]}</h1>
-                                <img src="/cop.png" id="cop">
+                                <img alt="comprato" src="/cop.png" id="cop">
                             </div>
                         `
             if(font_sel == i){

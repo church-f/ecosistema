@@ -269,7 +269,7 @@ io.on('connection', socket=>{
 
 function middleware(req, res, next){
     if (!req.session.nome) {
-        res.redirect('/login')
+        res.redirect('/')
         
       } else {
         next();
