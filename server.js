@@ -13,7 +13,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 //stripee
-const stripe = require('stripe')('pk_live_51K6ctHLkjitHDmEX4UhR8VVg7M2mPaSNsJCYv4e3WYBLaKOqnLH64xAsazSUDc8mS67ShndmgvUeIoDFuVDeEJsl004wJ4WoXS');
+const stripe = require('stripe')('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');
 
 //firebaseeeeeeeee
 var firebase = require('firebase/compat/app');
